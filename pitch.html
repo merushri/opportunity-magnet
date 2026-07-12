@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opportunity Magnet™ — CareerBubble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zain:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#0A0A12; --surface:#12121E; --surface-2:#191927; --border:#252538;
+    --cobalt:#2C4DD9; --cobalt-deep:#1A3BAF; --cobalt-light:#7090FF; --off:#F5F5FF;
+    --text:#F5F5FF; --text-2:#B8B8CC; --text-3:#77778F;
+    --green:#3DBB7A; --amber:#E8A63D;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { font-family:'Zain',sans-serif; background:var(--ink); color:var(--text); font-size:19px; line-height:1.55; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2,h3,h4 { font-family:'Satoshi',sans-serif; letter-spacing:-0.02em; }
+  .slide { max-width:820px; margin:0 auto; padding:72px 28px; border-bottom:1px solid var(--border); }
+  .kicker { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:14px; }
+  h2 { font-size:clamp(26px,4.6vw,38px); font-weight:900; line-height:1.12; margin-bottom:16px; }
+  .lede { font-size:20px; color:var(--text-2); }
+  .card { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:22px 24px; }
+
+  /* header + switcher */
+  header { text-align:center; padding:64px 28px 48px; border-bottom:1px solid var(--border); }
+  .brand { font-family:'Satoshi',sans-serif; font-weight:900; font-size:15px; color:var(--cobalt-light); letter-spacing:0.08em; text-transform:uppercase; }
+  header h1 { font-size:clamp(40px,8vw,68px); font-weight:900; line-height:1.03; margin:16px 0 6px; }
+  header h1 .tm { font-size:0.4em; vertical-align:super; }
+  .ed-tag { font-size:21px; color:var(--text-2); max-width:520px; margin:10px auto 30px; }
+  .switch { display:inline-flex; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:6px; flex-wrap:wrap; justify-content:center; }
+  .switch button { border:none; background:none; color:var(--text-3); font-family:'Satoshi',sans-serif; font-weight:700; font-size:14.5px; padding:10px 18px; border-radius:9px; cursor:pointer; }
+  .switch button.on { background:var(--cobalt); color:#fff; }
+  .ed-note { font-size:13.5px; color:var(--text-3); margin-top:14px; }
+
+  /* pain */
+  .pain-line { font-size:clamp(21px,3.4vw,27px); font-family:'Satoshi',sans-serif; font-weight:700; line-height:1.35; padding:18px 0; border-bottom:1px solid var(--border); }
+  .pain-line:last-child { border-bottom:none; }
+
+  /* story */
+  .story p { margin-bottom:16px; color:var(--text-2); font-size:20px; }
+  .story .punch { font-family:'Satoshi',sans-serif; font-weight:900; font-size:clamp(24px,4vw,32px); color:var(--off); line-height:1.2; margin:26px 0; }
+  .receipts { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:10px; margin-top:26px; }
+  .receipt { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:16px 18px; font-size:16px; color:var(--text-2); }
+  .receipt b { display:block; font-family:'Satoshi',sans-serif; color:var(--off); font-size:16.5px; margin-bottom:3px; }
+
+  /* forces */
+  .force { display:flex; gap:16px; padding:16px 0; border-bottom:1px solid var(--border); align-items:baseline; }
+  .force:last-child { border-bottom:none; }
+  .force .n { font-family:'Satoshi',sans-serif; font-weight:900; color:var(--cobalt-light); font-size:15px; width:22px; flex-shrink:0; }
+  .force .fname { font-family:'Satoshi',sans-serif; font-weight:700; font-size:18px; width:150px; flex-shrink:0; }
+  .force .fdesc { color:var(--text-2); font-size:17px; }
+  @media (max-width:560px){ .force{flex-wrap:wrap;} .force .fdesc{width:100%;} }
+
+  /* weeks */
+  .week { display:flex; gap:16px; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:18px 20px; margin-bottom:10px; }
+  .week .wn { font-family:'Satoshi',sans-serif; font-weight:900; font-size:13px; color:var(--cobalt-light); width:52px; flex-shrink:0; letter-spacing:0.06em; }
+  .week .wt b { display:block; font-family:'Satoshi',sans-serif; font-size:17px; color:var(--off); margin-bottom:2px; }
+  .week .wt { font-size:16.5px; color:var(--text-2); }
+  .week .wt .out { color:var(--green); font-size:15.5px; display:block; margin-top:6px; }
+
+  /* stack */
+  .stack-item { display:flex; justify-content:space-between; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); font-size:17.5px; }
+  .stack-item:last-child { border-bottom:none; }
+  .stack-item span:last-child { color:var(--text-3); white-space:nowrap; font-family:'Satoshi',sans-serif; font-size:15px; }
+
+  /* guarantee */
+  .guarantee { border:1px solid var(--green); background:rgba(61,187,122,.06); border-radius:16px; padding:26px 28px; }
+  .guarantee h3 { color:var(--green); font-size:14px; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:12px; }
+  .guarantee p { font-size:20px; }
+
+  /* price */
+  .price-box { text-align:center; background:var(--surface); border:1px solid var(--cobalt); border-radius:20px; padding:36px 28px; }
+  .price-old { font-size:17px; color:var(--text-3); text-decoration:line-through; }
+  .price-now { font-family:'Satoshi',sans-serif; font-size:clamp(44px,8vw,60px); font-weight:900; color:var(--off); line-height:1.1; }
+  .price-note { color:var(--text-2); font-size:17px; margin-top:10px; }
+  .seats { display:inline-block; margin-top:18px; background:rgba(232,166,61,.12); color:var(--amber); font-family:'Satoshi',sans-serif; font-weight:700; font-size:14px; padding:7px 16px; border-radius:20px; }
+
+  /* steps */
+  .step { display:flex; gap:16px; padding:14px 0; }
+  .step .sn { width:30px; height:30px; border-radius:50%; background:var(--cobalt); color:#fff; font-family:'Satoshi',sans-serif; font-weight:900; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px; }
+  .step .st { font-size:18px; color:var(--text-2); }
+  .step .st b { color:var(--off); }
+
+  .cta-final { text-align:center; padding:80px 28px 100px; }
+  .cta-final h2 { font-size:clamp(28px,5.5vw,44px); }
+  .cta-btn { display:inline-block; margin-top:26px; background:var(--cobalt); color:#fff; font-family:'Satoshi',sans-serif; font-weight:700; font-size:17px; padding:16px 34px; border-radius:12px; text-decoration:none; }
+  .cta-btn:hover { background:var(--cobalt-deep); }
+  .foot { color:var(--text-3); font-size:13.5px; margin-top:34px; }
+
+  @media print {
+    .switch, .ed-note { display:none; }
+    body { font-size:16px; }
+    .slide { padding:40px 20px; page-break-inside:avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">CareerBubble presents</div>
+  <h1>Opportunity Magnet<span class="tm">™</span></h1>
+  <p class="ed-tag" id="ed-tagline"></p>
+  <div class="switch" id="switch">
+    <button data-ed="campus">Campus · Students</button>
+    <button data-ed="career">Career · Young Professionals</button>
+    <button data-ed="brand">Personal Brand</button>
+  </div>
+  <div class="ed-note">Pick your edition. Same system, built for where you are.</div>
+</header>
+
+<!-- PAIN -->
+<section class="slide">
+  <div class="kicker" id="pain-kicker"></div>
+  <h2 id="pain-title"></h2>
+  <div id="pain-lines"></div>
+</section>
+
+<!-- STORY -->
+<section class="slide story">
+  <div class="kicker">Why me</div>
+  <h2>I kept getting picked. So I studied why.</h2>
+  <p>In 2020 I was selling cakes from my student kitchen at Loughborough. No brand. No budget. Strangers kept ordering. People could describe me in one line. The girl who bakes. The one obsessed with getting it right. One line did all my marketing.</p>
+  <p>Since then it kept happening. I joined BNI and became a Centurion member, the perfect-100 consistency recognition, ranked #1 in my chapter. I joined IMPA, the Image Management Professionals Association, and was made Secretary within days.</p>
+  <p>People asked me how. I looked back honestly at what I did.</p>
+  <div class="punch">Honestly? I was just posting. Showing up. Saying what I think. Being easy to describe.</div>
+  <p>Then I watched the people around me. Brilliant, hardworking, invisible. Their work was strong. Their line did not exist. The opportunity went to someone else. So I turned what I do on instinct into a system anyone can run. That system is this program.</p>
+  <div class="receipts">
+    <div class="receipt"><b>Centurion member, BNI</b>Perfect 100. Consistency, not luck.</div>
+    <div class="receipt"><b>Ranked #1 in chapter</b>A room of business owners, every week.</div>
+    <div class="receipt"><b>Secretary, IMPA</b>Offered within days of joining.</div>
+    <div class="receipt"><b>500+ people mentored</b>Students placed at Columbia, Wharton, LBS.</div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY + FORCES -->
+<section class="slide">
+  <div class="kicker">The idea</div>
+  <h2>Opportunities go to people who are easy to describe.</h2>
+  <p class="lede" style="margin-bottom:26px;">An Opportunity Magnet is someone so clear about who they are that the right people think of them first. Nobody is born one. You become one. Five forces decide your pull. The program builds one per week.</p>
+  <div class="card">
+    <div class="force"><div class="n">1</div><div class="fname">Clarity</div><div class="fdesc">You know who you are and what you are building.</div></div>
+    <div class="force"><div class="n">2</div><div class="fname">Conviction</div><div class="fdesc">You have a point of view and you say it.</div></div>
+    <div class="force"><div class="n">3</div><div class="fname">Communication</div><div class="fdesc">People understand your value in one sentence.</div></div>
+    <div class="force"><div class="n">4</div><div class="fname">Visibility</div><div class="fdesc">The right people can see you and find you.</div></div>
+    <div class="force"><div class="n">5</div><div class="fname">Credibility</div><div class="fdesc">Real work backs up every claim you make.</div></div>
+  </div>
+  <p style="color:var(--text-3); font-size:16px; margin-top:18px;">The Magnet Check™ measures all five and tells you your archetype. You take it before we start and again at the end. The score moves. You keep the proof.</p>
+</section>
+
+<!-- SIX WEEKS -->
+<section class="slide">
+  <div class="kicker">Six weeks</div>
+  <h2>Every week ends with something in your hands.</h2>
+  <p class="lede" style="margin-bottom:24px;">No theory dumps. One live session a week, one worksheet, one output you keep forever.</p>
+  <div id="weeks"></div>
+</section>
+
+<!-- VALUE STACK -->
+<section class="slide">
+  <div class="kicker">Everything included</div>
+  <h2 id="stack-title"></h2>
+  <div class="card" id="stack"></div>
+</section>
+
+<!-- GUARANTEE -->
+<section class="slide">
+  <div class="guarantee">
+    <h3>The guarantee</h3>
+    <p>Finish all six weeks. Do the work. If you leave without your positioning line, your intro script, and your visibility system, I keep working with you free until you have them. You risk effort. I risk time. Fair trade.</p>
+  </div>
+</section>
+
+<!-- HONEST PROOF -->
+<section class="slide">
+  <div class="kicker">Straight talk</div>
+  <h2>You are early. Here is what that means.</h2>
+  <p class="lede" style="margin-bottom:16px;">This is batch zero. There are no testimonials on this page because I refuse to invent them. What you get instead: founding pricing that never comes back, my full attention, and a before-and-after Magnet Score that becomes proof for both of us.</p>
+  <p style="color:var(--text-2); font-size:18px;">Everything I teach, I do in public. Check my profile. The posting, the rooms, the positions. The receipts are live and you can verify every one.</p>
+</section>
+
+<!-- PRICE -->
+<section class="slide">
+  <div class="price-box">
+    <div class="kicker" id="price-kicker"></div>
+    <div class="price-old" id="price-old"></div>
+    <div class="price-now" id="price-now"></div>
+    <div class="price-note" id="price-note"></div>
+    <div class="seats" id="price-seats"></div>
+  </div>
+</section>
+
+<!-- HOW TO START -->
+<section class="slide">
+  <div class="kicker">How to start</div>
+  <h2>Three steps. The first one is free.</h2>
+  <div class="step"><div class="sn">1</div><div class="st"><b>Take the Magnet Check.</b> 4 minutes. You get your archetype and your score out of 100.</div></div>
+  <div class="step"><div class="sn">2</div><div class="st"><b>Book a Magnet Debrief. ₹1,499.</b> 45 minutes with me on your result. We fix one thing live. You leave with your next three moves whether you join or not.</div></div>
+  <div class="step"><div class="sn">3</div><div class="st"><b>Take your seat.</b> If the debrief shows the program fits, you join your edition. If it does not fit, I say so. No limbo.</div></div>
+</section>
+
+<div class="cta-final">
+  <h2 id="cta-title"></h2>
+  <a class="cta-btn" href="mailto:hello@careerbubble.in?subject=Opportunity%20Magnet" id="cta-btn">DM me MAGNET on LinkedIn</a>
+  <div class="foot">Opportunity Magnet™ by CareerBubble · Meru · Batch zero, July 2026</div>
+</div>
+
+<script>
+const EDITIONS = {
+  campus: {
+    tagline: "For students. Become the one on campus that opportunities find.",
+    painKicker: "You know this feeling",
+    painTitle: "The same five students get everything.",
+    painLines: [
+      "The fest committee. The speaker slots. The internships. Somehow always them.",
+      "You were told to study hard and wait your turn. There is no turn.",
+      "Nobody taught you how to find opportunities. Or how to be found.",
+      "The collaboration, the stage, the internship. They go to the student people can describe."
+    ],
+    weeks: [
+      ["Know Your Pull", "Kill the \"I can do anything\" answer. Find your thing.", "You keep: your one-line positioning statement."],
+      ["Pick a Side", "The opinions you already hold, said out loud without drama.", "You keep: three written beliefs. Your point of view on record."],
+      ["Say It So It Sticks", "The intro that works at a fest, an interview, and a family wedding.", "You keep: your intro script plus a rebuilt LinkedIn profile."],
+      ["Get Seen Without Shouting", "Posting, campus rooms, and profiles that work while you study.", "You keep: your visibility system. What you share, where, how often."],
+      ["Show, Don't Say", "Projects, wins, and people who vouch for you, turned into evidence.", "You keep: a proof portfolio that opens doors."],
+      ["The Pull Plan", "What seniors and recruiters say about you when you are not in the room.", "You keep: your 90-day plan plus your new Magnet Score."]
+    ],
+    stackTitle: "Worth more than a semester of waiting.",
+    stack: [
+      ["Magnet Check™ + 45-minute personal debrief", "₹1,499 sold alone"],
+      ["6 live group sessions, cohort of 10", "the core"],
+      ["Weekly worksheets and outputs you keep", "included"],
+      ["WhatsApp access to Meru, Mon to Fri", "included"],
+      ["LinkedIn profile rebuild review", "included"],
+      ["Before and after Magnet Score report", "included"],
+      ["90-day Pull Plan", "included"]
+    ],
+    priceKicker: "Campus Edition · founding batch",
+    priceOld: "₹9,999 after founding batch",
+    priceNow: "₹6,999",
+    priceNote: "6 weeks. 10 seats. Less than what one missed internship costs you.",
+    priceSeats: "10 founding seats, then the price goes up and stays up",
+    ctaTitle: "Your batchmates will ask how you got picked."
+  },
+  career: {
+    tagline: "For young professionals. Stop being the best kept secret at work.",
+    painKicker: "You know this feeling",
+    painTitle: "Your work is strong. The room does not know.",
+    painLines: [
+      "Someone else got the project. The raise. The mention in the leadership meeting.",
+      "You were told good work speaks for itself. It has been quiet for years.",
+      "Passed over feels personal. It is structural. Nobody can pick who they cannot describe.",
+      "The opportunity goes to the person who is easy to remember and easy to recommend."
+    ],
+    weeks: [
+      ["Know Your Pull", "Kill the \"I do many things\" answer. Plant your flag.", "You keep: your one-line positioning statement."],
+      ["Pick a Side", "Professional opinions you already hold, stated without drama.", "You keep: three written beliefs. Your point of view on record."],
+      ["Say It So It Sticks", "The answer to \"so what do you do?\" that people repeat for you.", "You keep: your intro script plus a rebuilt LinkedIn headline and about."],
+      ["Get Seen Without Shouting", "Visibility inside your company and outside it. No cringe posting.", "You keep: your visibility system. What you share, where, how often."],
+      ["Show, Don't Say", "Twelve months of quiet work turned into loud evidence.", "You keep: a proof kit. Wins, numbers, people who vouch."],
+      ["The Pull Plan", "The recommend-me line. What gets said when you are not in the room.", "You keep: your 90-day plan plus your new Magnet Score."]
+    ],
+    stackTitle: "Costs less than staying invisible for another year.",
+    stack: [
+      ["Magnet Check™ + 45-minute personal debrief", "₹1,499 sold alone"],
+      ["6 live sessions in a circle of 8", "the core"],
+      ["Weekly worksheets and outputs you keep", "included"],
+      ["WhatsApp access to Meru, Mon to Fri", "included"],
+      ["LinkedIn profile rebuild review", "included"],
+      ["Before and after Magnet Score report", "included"],
+      ["90-day Pull Plan", "included"]
+    ],
+    priceKicker: "Career Edition · founding circle",
+    priceOld: "₹19,999 after the founding circle",
+    priceNow: "₹14,999",
+    priceNote: "6 weeks. 8 seats. One salary jump covers this many times over. Want it 1:1 instead? ₹24,999, ask in the debrief.",
+    priceSeats: "8 founding seats, then the price goes up and stays up",
+    ctaTitle: "Next appraisal, be the name they already know."
+  },
+  brand: {
+    tagline: "For founders and freelancers. Clients who ask for you by name.",
+    painKicker: "You know this feeling",
+    painTitle: "Your pipeline is referrals and luck.",
+    painLines: [
+      "The work is good. The right people have no way of knowing.",
+      "When someone hears about you and looks you up, your profile undersells you.",
+      "Everyone's feed sounds generated now. Being impossible to confuse is the edge.",
+      "The client goes to the person they can describe to their partner in one line."
+    ],
+    weeks: [
+      ["Know Your Pull", "One offer, one person you serve, one flag. Kill the everything-shop.", "You keep: your positioning line and offer statement."],
+      ["Pick a Side", "The opinions that make clients pick you before the sales call.", "You keep: three written beliefs. Your point of view on record."],
+      ["Say It So It Sticks", "The bio, the intro, the answer that gets repeated in rooms you are not in.", "You keep: your intro script plus a rebuilt profile and bio."],
+      ["Get Seen Without Shouting", "A content system you can run in 3 hours a week. Sustainable, not viral.", "You keep: your visibility system with a weekly rhythm."],
+      ["Show, Don't Say", "Receipts. Results, numbers, and clients who vouch, packaged as proof.", "You keep: a proof kit that closes deals before the call."],
+      ["The Pull Plan", "Referable on purpose. What gets said about you in rooms of buyers.", "You keep: your 90-day plan plus your new Magnet Score."]
+    ],
+    stackTitle: "One client covers it. You keep the system forever.",
+    stack: [
+      ["Magnet Check™ + 45-minute personal debrief", "₹1,499 sold alone"],
+      ["6 private 1:1 sessions, done with you", "the core"],
+      ["Weekly worksheets and outputs you keep", "included"],
+      ["WhatsApp access to Meru, Mon to Fri", "included"],
+      ["Full LinkedIn profile rebuild, done together", "included"],
+      ["Before and after Magnet Score report", "included"],
+      ["90-day Pull Plan", "included"]
+    ],
+    priceKicker: "Personal Brand Edition · founding seats",
+    priceOld: "₹35,000 after founding seats",
+    priceNow: "₹24,999",
+    priceNote: "6 weeks, fully 1:1. 10,000 people follow me because of how I show up. I build you the system I use.",
+    priceSeats: "5 founding seats, then the price goes up and stays up",
+    ctaTitle: "Be the name that comes up when the budget exists."
+  }
+};
+
+const $ = id => document.getElementById(id);
+function esc(s){ return s.replace(/</g,'&lt;'); }
+
+function render(ed) {
+  const d = EDITIONS[ed];
+  document.querySelectorAll('.switch button').forEach(b => b.classList.toggle('on', b.dataset.ed === ed));
+  $('ed-tagline').textContent = d.tagline;
+  $('pain-kicker').textContent = d.painKicker;
+  $('pain-title').textContent = d.painTitle;
+  $('pain-lines').innerHTML = d.painLines.map(l => '<div class="pain-line">'+esc(l)+'</div>').join('');
+  $('weeks').innerHTML = d.weeks.map((w,i) =>
+    '<div class="week"><div class="wn">WEEK '+(i+1)+'</div><div class="wt"><b>'+esc(w[0])+'</b>'+esc(w[1])+'<span class="out">'+esc(w[2])+'</span></div></div>'
+  ).join('');
+  $('stack-title').textContent = d.stackTitle;
+  $('stack').innerHTML = d.stack.map(s =>
+    '<div class="stack-item"><span>'+esc(s[0])+'</span><span>'+esc(s[1])+'</span></div>'
+  ).join('');
+  $('price-kicker').textContent = d.priceKicker;
+  $('price-old').textContent = d.priceOld;
+  $('price-now').textContent = d.priceNow;
+  $('price-note').textContent = d.priceNote;
+  $('price-seats').textContent = d.priceSeats;
+  $('cta-title').textContent = d.ctaTitle;
+  try { localStorage.setItem('omPitchEdition', ed); } catch(e){}
+  const url = new URL(location); url.searchParams.set('edition', ed); history.replaceState(null,'',url);
+}
+
+document.querySelectorAll('.switch button').forEach(b =>
+  b.addEventListener('click', () => render(b.dataset.ed)));
+
+const fromUrl = new URLSearchParams(location.search).get('edition');
+let saved = null; try { saved = localStorage.getItem('omPitchEdition'); } catch(e){}
+render(EDITIONS[fromUrl] ? fromUrl : (EDITIONS[saved] ? saved : 'career'));
+</script>
+</body>
+</html>

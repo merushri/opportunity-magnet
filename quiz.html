@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Magnet Check™ | CareerBubble</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Zain:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cobalt: #2C4DD9;
+    --cobalt-deep: #1A3BAF;
+    --cobalt-light: #7090FF;
+    --off-white: #F5F5FF;
+    --ink: #0A0A12;
+    --ink-2: #0E0E1A;
+    --surface: rgba(245,245,255,0.035);
+    --surface-2: rgba(245,245,255,0.06);
+    --border: rgba(112,144,255,0.16);
+    --border-strong: rgba(112,144,255,0.35);
+    --text: #F5F5FF;
+    --text-2: rgba(245,245,255,0.72);
+    --text-3: rgba(245,245,255,0.45);
+    --radius: 18px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Zain', sans-serif;
+    background:var(--ink);
+    color:var(--text);
+    min-height:100vh;
+    font-size:19px;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  body::before {
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(1000px 600px at 85% -10%, rgba(44,77,217,0.22), transparent 60%),
+      radial-gradient(800px 500px at -10% 110%, rgba(26,59,175,0.18), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  h1,h2,h3,.display { font-family:'Satoshi', sans-serif; letter-spacing:-0.02em; }
+
+  .wrap { position:relative; z-index:1; max-width:760px; margin:0 auto; padding:0 24px 80px; }
+
+  /* Top bar */
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:26px 0 18px;
+  }
+  .brand { display:flex; align-items:center; gap:10px; }
+  .brand-mark {
+    width:34px; height:34px; border-radius:10px;
+    background:linear-gradient(135deg, var(--cobalt), var(--cobalt-light));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Satoshi',sans-serif; font-weight:900; font-size:18px; color:#fff;
+    box-shadow:0 4px 18px rgba(44,77,217,0.45);
+  }
+  .brand-word { font-family:'Satoshi',sans-serif; font-weight:700; font-size:17px; letter-spacing:-0.01em; }
+  .brand-word span { color:var(--cobalt-light); }
+  .restart-btn {
+    background:none; border:1px solid var(--border); color:var(--text-3);
+    font-family:'Satoshi',sans-serif; font-size:12px; font-weight:500;
+    padding:7px 14px; border-radius:99px; cursor:pointer; transition:all .2s;
+  }
+  .restart-btn:hover { color:var(--text); border-color:var(--border-strong); }
+
+  /* Progress */
+  .progress-shell { height:3px; background:rgba(245,245,255,0.08); border-radius:99px; overflow:hidden; margin-bottom:8px; }
+  .progress-fill {
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--cobalt), var(--cobalt-light));
+    border-radius:99px; transition:width .45s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-label { font-family:'Satoshi',sans-serif; font-size:11.5px; color:var(--text-3); letter-spacing:0.08em; text-transform:uppercase; margin-bottom:28px; }
+
+  /* Screens */
+  .screen { display:none; animation:rise .5s cubic-bezier(.2,.7,.3,1); }
+  .screen.active { display:block; }
+  @keyframes rise { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+
+  /* Hero */
+  .hero { text-align:center; padding:48px 0 20px; }
+  .magnet-svg { width:72px; height:72px; margin:0 auto 28px; display:block; filter:drop-shadow(0 6px 24px rgba(44,77,217,0.55)); }
+  .eyebrow {
+    font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700;
+    letter-spacing:0.22em; text-transform:uppercase; color:var(--cobalt-light);
+    margin-bottom:18px;
+  }
+  .hero h1 {
+    font-size:clamp(38px, 7vw, 58px); font-weight:900; line-height:1.05;
+    margin-bottom:22px;
+  }
+  .hero h1 em {
+    font-style:normal;
+    background:linear-gradient(100deg, var(--cobalt-light), #A8BCFF);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero .lede { font-size:21px; color:var(--text-2); max-width:540px; margin:0 auto 14px; }
+  .hero .sub { font-size:17px; color:var(--text-3); max-width:520px; margin:0 auto 38px; }
+
+  .cta-btn {
+    display:inline-block; font-family:'Satoshi',sans-serif; font-weight:700; font-size:16px;
+    color:#fff; background:linear-gradient(135deg, var(--cobalt), var(--cobalt-deep));
+    border:none; border-radius:99px; padding:17px 42px; cursor:pointer;
+    box-shadow:0 8px 32px rgba(44,77,217,0.45), inset 0 1px 0 rgba(255,255,255,0.18);
+    transition:transform .18s, box-shadow .18s;
+    text-decoration:none;
+  }
+  .cta-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(44,77,217,0.6), inset 0 1px 0 rgba(255,255,255,0.18); }
+  .cta-btn.ghost {
+    background:none; box-shadow:none; border:1px solid var(--border-strong); color:var(--text-2);
+  }
+  .cta-btn.ghost:hover { color:var(--text); border-color:var(--cobalt-light); }
+  .cta-btn.locked { opacity:.4; pointer-events:none; }
+
+  .hero-meta { display:flex; gap:28px; justify-content:center; margin-top:36px; flex-wrap:wrap; }
+  .hero-meta div { font-size:14px; color:var(--text-3); font-family:'Satoshi',sans-serif; }
+  .hero-meta b { color:var(--text-2); font-weight:700; }
+
+  .forces-strip { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:44px; }
+  .force-chip {
+    font-family:'Satoshi',sans-serif; font-size:12.5px; font-weight:500;
+    padding:7px 15px; border-radius:99px;
+    border:1px solid var(--border); color:var(--text-3); background:var(--surface);
+  }
+
+  /* Step headers */
+  .step-title { font-size:clamp(26px,5vw,36px); font-weight:900; font-family:'Satoshi',sans-serif; margin-bottom:10px; }
+  .step-sub { color:var(--text-2); font-size:19px; margin-bottom:32px; max-width:560px; }
+
+  /* About you */
+  .field-label { font-family:'Satoshi',sans-serif; font-weight:700; font-size:16px; margin-bottom:10px; }
+  .field-hint { font-size:15px; color:var(--text-3); margin:-6px 0 12px; }
+  .text-input {
+    width:100%; background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    color:var(--text); font-family:'Satoshi',sans-serif; font-size:19px; font-weight:500;
+    padding:16px 18px; outline:none; transition:border-color .2s; margin-bottom:30px;
+  }
+  .text-input:focus { border-color:var(--cobalt-light); box-shadow:0 0 0 1px var(--cobalt-light); }
+  .text-input::placeholder { color:var(--text-3); font-weight:400; }
+  .stage-opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:8px; }
+  .stage-opt {
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:16px 18px; cursor:pointer; transition:all .16s; font-family:'Satoshi',sans-serif;
+  }
+  .stage-opt:hover { border-color:var(--border-strong); }
+  .stage-opt.selected { border-color:var(--cobalt-light); background:rgba(44,77,217,0.18); box-shadow:0 0 0 1px var(--cobalt-light); }
+  .stage-opt .s-name { font-weight:700; font-size:15.5px; }
+  .stage-opt .s-desc { font-size:14px; color:var(--text-3); margin-top:2px; font-family:'Zain',sans-serif; }
+
+  /* This-or-that */
+  .ab-block { margin-bottom:28px; }
+  .ab-q { font-family:'Satoshi',sans-serif; font-weight:700; font-size:18px; margin-bottom:12px; }
+  .ab-opts { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .ab-opt {
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:15px 16px; cursor:pointer; transition:all .16s; font-size:17px; color:var(--text-2);
+    line-height:1.4;
+  }
+  .ab-opt:hover { border-color:var(--border-strong); }
+  .ab-opt.selected { border-color:var(--cobalt-light); background:rgba(44,77,217,0.18); color:var(--text); box-shadow:0 0 0 1px var(--cobalt-light); }
+
+  /* Chips (strengths, aptitudes) */
+  .pick-counter { font-family:'Satoshi',sans-serif; font-size:12.5px; font-weight:700; color:var(--cobalt-light); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:12px; }
+  .chip-grid { display:flex; flex-wrap:wrap; gap:9px; margin-bottom:34px; }
+  .chip {
+    background:var(--surface); border:1px solid var(--border); border-radius:99px;
+    padding:10px 18px; cursor:pointer; transition:all .16s;
+    font-family:'Satoshi',sans-serif; font-size:14.5px; font-weight:500; color:var(--text-2);
+  }
+  .chip:hover { border-color:var(--border-strong); }
+  .chip.selected { border-color:var(--cobalt-light); background:rgba(44,77,217,0.22); color:var(--text); box-shadow:0 0 0 1px var(--cobalt-light); }
+  .chip.dim { opacity:.4; }
+  .chip .sub { display:block; font-size:12.5px; color:var(--text-3); font-weight:400; font-family:'Zain',sans-serif; }
+  .chip.wide { border-radius:14px; }
+
+  /* Question card */
+  .q-force {
+    font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:14px;
+  }
+  .q-text { font-size:clamp(24px,4.4vw,31px); font-weight:700; line-height:1.22; margin-bottom:30px; font-family:'Satoshi',sans-serif; }
+  .options { display:flex; flex-direction:column; gap:12px; }
+  .option {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:17px 20px; cursor:pointer; font-size:18.5px; color:var(--text-2);
+    display:flex; align-items:center; gap:14px; text-align:left; width:100%;
+    transition:all .16s; font-family:'Zain',sans-serif; line-height:1.4;
+  }
+  .option:hover { border-color:var(--border-strong); background:var(--surface-2); transform:translateX(3px); }
+  .option.selected {
+    border-color:var(--cobalt-light); background:rgba(44,77,217,0.18); color:var(--text);
+    box-shadow:0 0 0 1px var(--cobalt-light), 0 8px 24px rgba(44,77,217,0.25);
+  }
+  .opt-key {
+    flex-shrink:0; width:28px; height:28px; border-radius:8px;
+    border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+    font-family:'Satoshi',sans-serif; font-size:12.5px; font-weight:700; color:var(--text-3);
+    transition:all .16s;
+  }
+  .option.selected .opt-key { background:var(--cobalt); border-color:var(--cobalt); color:#fff; }
+  .nav-row { display:flex; justify-content:space-between; align-items:center; margin-top:30px; }
+  .back-btn {
+    background:none; border:none; color:var(--text-3); font-family:'Satoshi',sans-serif;
+    font-size:14px; font-weight:500; cursor:pointer; padding:8px 4px; transition:color .2s;
+  }
+  .back-btn:hover { color:var(--text); }
+  .back-btn:disabled { opacity:0; pointer-events:none; }
+
+  /* Targets */
+  .target-block { margin-bottom:26px; }
+  .target-name { font-family:'Satoshi',sans-serif; font-weight:700; font-size:17px; margin-bottom:4px; }
+  .target-desc { font-size:15.5px; color:var(--text-3); margin-bottom:10px; }
+  .target-opts { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; }
+  .target-opt {
+    background:var(--surface); border:1px solid var(--border); border-radius:14px;
+    padding:12px 10px; cursor:pointer; text-align:center; transition:all .16s;
+    font-family:'Satoshi',sans-serif;
+  }
+  .target-opt:hover { border-color:var(--border-strong); }
+  .target-opt.selected { border-color:var(--cobalt-light); background:rgba(44,77,217,0.18); box-shadow:0 0 0 1px var(--cobalt-light); }
+  .target-opt .t-name { font-size:14px; font-weight:700; }
+  .target-opt .t-num { font-size:11.5px; color:var(--text-3); margin-top:2px; }
+
+  /* Opportunity */
+  .goal-opt {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:18px 20px; cursor:pointer; transition:all .16s; margin-bottom:12px;
+  }
+  .goal-opt:hover { border-color:var(--border-strong); transform:translateX(3px); }
+  .goal-opt.selected { border-color:var(--cobalt-light); background:rgba(44,77,217,0.18); box-shadow:0 0 0 1px var(--cobalt-light); }
+  .goal-opt .g-name { font-family:'Satoshi',sans-serif; font-weight:700; font-size:17px; }
+  .goal-opt .g-desc { font-size:16px; color:var(--text-3); margin-top:3px; }
+
+  /* Results */
+  .result-hero { text-align:center; padding:34px 0 8px; }
+  .archetype-label { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:14px; }
+  .archetype-name { font-size:clamp(36px,6.5vw,52px); font-weight:900; font-family:'Satoshi',sans-serif; line-height:1.05; margin-bottom:16px; }
+  .archetype-desc { font-size:20px; color:var(--text-2); max-width:560px; margin:0 auto 34px; }
+
+  .score-ring-wrap { position:relative; width:190px; height:190px; margin:0 auto 12px; }
+  .score-ring-wrap svg { transform:rotate(-90deg); }
+  .score-num {
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    font-family:'Satoshi',sans-serif;
+  }
+  .score-num .n { font-size:52px; font-weight:900; line-height:1; }
+  .score-num .lbl { font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--text-3); margin-top:6px; }
+
+  .panel {
+    background:var(--surface); border:1px solid var(--border); border-radius:22px;
+    padding:30px 28px; margin-top:26px;
+  }
+  .panel-title { font-family:'Satoshi',sans-serif; font-weight:700; font-size:19px; margin-bottom:6px; }
+  .panel-sub { font-size:16px; color:var(--text-3); margin-bottom:24px; }
+
+  /* Wired panel */
+  .style-head { display:flex; align-items:center; gap:14px; margin-bottom:14px; }
+  .style-badge {
+    width:52px; height:52px; border-radius:16px; flex-shrink:0;
+    background:linear-gradient(135deg, var(--cobalt), var(--cobalt-light));
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Satoshi',sans-serif; font-weight:900; font-size:22px; color:#fff;
+    box-shadow:0 6px 20px rgba(44,77,217,0.4);
+  }
+  .style-name { font-family:'Satoshi',sans-serif; font-weight:900; font-size:24px; }
+  .style-kind { font-size:13px; color:var(--text-3); font-family:'Satoshi',sans-serif; letter-spacing:0.08em; text-transform:uppercase; }
+  .style-desc { font-size:18px; color:var(--text-2); margin-bottom:14px; }
+  .style-line { display:flex; gap:10px; align-items:flex-start; padding:12px 14px; border-radius:12px; margin-bottom:8px; font-size:16.5px; }
+  .style-line.edge { background:rgba(44,77,217,0.14); border:1px solid var(--border-strong); color:var(--text-2); }
+  .style-line.watch { background:var(--surface-2); border:1px solid var(--border); color:var(--text-3); }
+  .style-line b { font-family:'Satoshi',sans-serif; color:var(--cobalt-light); font-weight:700; flex-shrink:0; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; padding-top:3px; }
+  .mini-label { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-3); margin:20px 0 10px; }
+  .tag-row { display:flex; flex-wrap:wrap; gap:8px; }
+  .tag-pill {
+    font-family:'Satoshi',sans-serif; font-size:13.5px; font-weight:700;
+    padding:8px 16px; border-radius:99px; color:var(--text);
+    background:rgba(44,77,217,0.2); border:1px solid var(--border-strong);
+  }
+  .tag-pill.soft { background:var(--surface-2); border-color:var(--border); color:var(--text-2); font-weight:500; }
+
+  .bar-row { margin-bottom:20px; }
+  .bar-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; }
+  .bar-name { font-family:'Satoshi',sans-serif; font-weight:700; font-size:15px; }
+  .bar-nums { font-family:'Satoshi',sans-serif; font-size:12.5px; color:var(--text-3); }
+  .bar-nums b { color:var(--cobalt-light); font-weight:700; }
+  .bar-shell { position:relative; height:12px; background:rgba(245,245,255,0.07); border-radius:99px; }
+  .bar-fill {
+    position:absolute; left:0; top:0; height:100%; width:0;
+    background:linear-gradient(90deg, var(--cobalt-deep), var(--cobalt-light));
+    border-radius:99px; transition:width 1.1s cubic-bezier(.2,.7,.3,1);
+  }
+  .bar-target {
+    position:absolute; top:-4px; width:3px; height:20px; border-radius:2px;
+    background:var(--off-white); box-shadow:0 0 8px rgba(245,245,255,0.6);
+  }
+  .bar-legend { display:flex; gap:20px; margin-top:6px; font-size:13px; color:var(--text-3); font-family:'Satoshi',sans-serif; }
+  .bar-legend .dot { display:inline-block; width:9px; height:9px; border-radius:3px; background:linear-gradient(90deg,var(--cobalt-deep),var(--cobalt-light)); margin-right:6px; }
+  .bar-legend .tick { display:inline-block; width:3px; height:11px; border-radius:2px; background:var(--off-white); margin-right:8px; vertical-align:-1px; }
+
+  .gap-item { display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--border); }
+  .gap-item:last-child { border-bottom:none; padding-bottom:4px; }
+  .gap-num {
+    flex-shrink:0; width:40px; height:40px; border-radius:12px;
+    background:rgba(44,77,217,0.2); border:1px solid var(--border-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Satoshi',sans-serif; font-weight:900; font-size:16px; color:var(--cobalt-light);
+  }
+  .gap-body h4 { font-family:'Satoshi',sans-serif; font-size:16.5px; margin-bottom:3px; }
+  .gap-body p { font-size:17px; color:var(--text-2); }
+  .gap-body .fix { font-size:15px; color:var(--cobalt-light); font-family:'Satoshi',sans-serif; font-weight:500; margin-top:6px; }
+
+  /* Do-next panel */
+  .do-item { display:flex; gap:14px; padding:14px 0; border-bottom:1px solid var(--border); }
+  .do-item:last-child { border-bottom:none; padding-bottom:2px; }
+  .do-check {
+    flex-shrink:0; width:26px; height:26px; border-radius:9px; margin-top:2px;
+    border:1.5px solid var(--cobalt-light); display:flex; align-items:center; justify-content:center;
+    color:var(--cobalt-light); font-family:'Satoshi',sans-serif; font-weight:900; font-size:13px;
+  }
+  .do-body h4 { font-family:'Satoshi',sans-serif; font-size:15.5px; color:var(--cobalt-light); margin-bottom:2px; letter-spacing:0.04em; text-transform:uppercase; font-weight:700; font-size:12.5px; }
+  .do-body p { font-size:17.5px; color:var(--text-2); }
+
+  .week-row {
+    display:flex; gap:14px; align-items:flex-start; padding:14px 16px; border-radius:14px;
+    margin-bottom:8px; border:1px solid transparent;
+  }
+  .week-row.hot { background:rgba(44,77,217,0.14); border-color:var(--border-strong); }
+  .week-tag {
+    flex-shrink:0; font-family:'Satoshi',sans-serif; font-size:11px; font-weight:700;
+    letter-spacing:0.08em; color:var(--text-3); text-transform:uppercase; padding-top:3px; width:52px;
+  }
+  .week-row.hot .week-tag { color:var(--cobalt-light); }
+  .week-body h4 { font-family:'Satoshi',sans-serif; font-size:16px; }
+  .week-body p { font-size:16px; color:var(--text-3); }
+  .hot-flag {
+    display:inline-block; font-size:10.5px; font-weight:700; font-family:'Satoshi',sans-serif;
+    letter-spacing:0.06em; text-transform:uppercase; color:#fff;
+    background:var(--cobalt); border-radius:5px; padding:2px 7px; margin-left:8px; vertical-align:2px;
+  }
+
+  .final-cta { text-align:center; padding:44px 20px 10px; }
+  .final-cta h3 { font-size:clamp(24px,4.5vw,32px); font-weight:900; margin-bottom:12px; }
+  .final-cta p { color:var(--text-2); max-width:480px; margin:0 auto 28px; font-size:18px; }
+  .cta-row-btns { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+
+  .footer { text-align:center; margin-top:60px; color:var(--text-3); font-size:14px; font-family:'Satoshi',sans-serif; }
+  .footer .tag { font-weight:700; color:var(--text-2); margin-bottom:4px; }
+
+  .saved-note { text-align:center; font-size:13px; color:var(--text-3); margin-top:18px; font-family:'Satoshi',sans-serif; }
+
+  /* Target level cards */
+  .level-opt {
+    background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+    padding:20px 22px; cursor:pointer; transition:all .16s; margin-bottom:12px;
+    display:flex; gap:16px; align-items:flex-start;
+  }
+  .level-opt:hover { border-color:var(--border-strong); transform:translateX(3px); }
+  .level-opt.selected { border-color:var(--cobalt-light); background:rgba(44,77,217,0.18); box-shadow:0 0 0 1px var(--cobalt-light); }
+  .level-dot {
+    flex-shrink:0; width:38px; height:38px; border-radius:12px; margin-top:2px;
+    background:rgba(44,77,217,0.2); border:1px solid var(--border-strong);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Satoshi',sans-serif; font-weight:900; font-size:15px; color:var(--cobalt-light);
+  }
+  .level-opt.selected .level-dot { background:var(--cobalt); color:#fff; border-color:var(--cobalt); }
+  .level-name { font-family:'Satoshi',sans-serif; font-weight:700; font-size:17.5px; }
+  .level-line { font-size:17.5px; color:var(--text-2); margin-top:2px; }
+
+  /* Reveal */
+  .reveal-wrap { text-align:center; padding:130px 0 60px; }
+  .reveal-magnet { animation:pulseMag 1s ease-in-out infinite; }
+  @keyframes pulseMag {
+    0%,100% { transform:scale(1); opacity:.85; }
+    50% { transform:scale(1.12); opacity:1; }
+  }
+  .reveal-line {
+    font-family:'Satoshi',sans-serif; font-weight:700; font-size:22px; color:var(--text-2);
+    margin-top:10px; animation:rise .4s ease;
+  }
+
+  /* Score verdict */
+  .score-verdict {
+    font-family:'Satoshi',sans-serif; font-weight:700; font-size:19px; color:var(--cobalt-light);
+    max-width:420px; margin:14px auto 0;
+  }
+
+  /* Panels rise in as you scroll */
+  .panel.hidden-panel { opacity:0; transform:translateY(24px); }
+  .panel { transition:opacity .7s cubic-bezier(.2,.7,.3,1), transform .7s cubic-bezier(.2,.7,.3,1); }
+
+  /* Confetti */
+  #confettiWrap { position:fixed; inset:0; pointer-events:none; z-index:99; overflow:hidden; }
+  .confetti {
+    position:absolute; top:-4vh; border-radius:2px;
+    animation:confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform:translateY(0) rotate(0deg); opacity:1; }
+    100% { transform:translateY(115vh) rotate(720deg); opacity:0; }
+  }
+
+  @media (max-width:560px) {
+    .target-opts { grid-template-columns:1fr; }
+    .stage-opts { grid-template-columns:1fr; }
+    .ab-opts { grid-template-columns:1fr; }
+    .option { font-size:17.5px; }
+  }
+  @media print {
+    body { background:#fff; color:#111; }
+    body::before, .topbar, .final-cta, .restart-btn, .nav-row { display:none; }
+    .panel { border-color:#ccc; break-inside:avoid; }
+    .panel.hidden-panel { opacity:1 !important; transform:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">cb</div>
+      <div class="brand-word">career<span>bübble</span></div>
+    </div>
+    <button class="restart-btn" id="restartBtn" style="display:none;">Start over</button>
+  </div>
+
+  <div id="progressWrap" style="display:none;">
+    <div class="progress-shell"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-label" id="progressLabel"></div>
+  </div>
+
+  <!-- INTRO -->
+  <section class="screen" id="screen-intro">
+    <div class="hero">
+      <svg class="magnet-svg" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 12 v22 a16 16 0 0 0 32 0 V12" stroke="url(#mg)" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <rect x="15.5" y="10" width="9" height="10" rx="2" fill="#F5F5FF"/>
+        <rect x="47.5" y="10" width="9" height="10" rx="2" fill="#F5F5FF"/>
+        <path d="M28 62 l3 -5 M36 64 l0 -6 M44 62 l-3 -5" stroke="#7090FF" stroke-width="2.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="mg" x1="20" y1="12" x2="52" y2="50">
+            <stop stop-color="#7090FF"/><stop offset="1" stop-color="#2C4DD9"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="eyebrow">The Magnet Check™</div>
+      <h1>Do opportunities <em>find you</em>, or do you chase them?</h1>
+      <p class="lede">Opportunities don't go to the longest CV. They go to the person people remember, trust, and know how to describe.</p>
+      <p class="sub">First we learn who you are. Then 20 questions on how you show up. You leave with your personality style, your Magnet Score, and a plan for the gap.</p>
+      <button class="cta-btn" id="startBtn">Check my pull</button>
+      <div class="hero-meta">
+        <div><b>6 min</b> to finish</div>
+        <div><b>Saves</b> as you go</div>
+        <div><b>Free</b> and honest</div>
+      </div>
+      <div class="forces-strip">
+        <span class="force-chip">Clarity</span>
+        <span class="force-chip">Conviction</span>
+        <span class="force-chip">Communication</span>
+        <span class="force-chip">Visibility</span>
+        <span class="force-chip">Credibility</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT YOU -->
+  <section class="screen" id="screen-about">
+    <h2 class="step-title">First, you.</h2>
+    <p class="step-sub">A magnet is personal. Your results should be too.</p>
+    <div class="field-label">What should we call you?</div>
+    <input type="text" class="text-input" id="nameInput" maxlength="30" placeholder="Your first name" autocomplete="given-name">
+    <div class="field-label">Where are you right now?</div>
+    <div class="stage-opts" id="stageOpts"></div>
+    <div class="nav-row">
+      <button class="back-btn" id="aBack">&larr; Back</button>
+      <button class="cta-btn locked" id="aNext">Next</button>
+    </div>
+  </section>
+
+  <!-- HOW YOU'RE WIRED -->
+  <section class="screen" id="screen-wired">
+    <h2 class="step-title">How are you wired?</h2>
+    <p class="step-sub">There is no better answer here. Your personality is what makes people remember you.</p>
+    <div id="abBlocks"></div>
+    <div class="nav-row">
+      <button class="back-btn" id="wBack">&larr; Back</button>
+      <button class="cta-btn locked" id="wNext">Next</button>
+    </div>
+  </section>
+
+  <!-- RAW MATERIAL -->
+  <section class="screen" id="screen-material">
+    <h2 class="step-title">Your raw material.</h2>
+    <p class="step-sub">Strengths are what you're known for. Aptitudes are where your mind goes first. Both decide what you can build with.</p>
+    <div class="field-label">Your strengths</div>
+    <div class="pick-counter" id="strengthCount">Pick your top 3</div>
+    <div class="chip-grid" id="strengthChips"></div>
+    <div class="field-label">Your home ground</div>
+    <div class="field-hint">Where does your mind go first? Pick 2.</div>
+    <div class="pick-counter" id="aptCount">Pick 2</div>
+    <div class="chip-grid" id="aptChips"></div>
+    <div class="nav-row">
+      <button class="back-btn" id="mBack">&larr; Back</button>
+      <button class="cta-btn locked" id="mNext">Start the 20 questions</button>
+    </div>
+  </section>
+
+  <!-- QUIZ -->
+  <section class="screen" id="screen-quiz">
+    <div class="q-force" id="qForce"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="options" id="qOptions"></div>
+    <div class="nav-row">
+      <button class="back-btn" id="qBack">&larr; Back</button>
+      <span></span>
+    </div>
+  </section>
+
+  <!-- TARGETS -->
+  <section class="screen" id="screen-targets">
+    <h2 class="step-title">Twelve months from now.</h2>
+    <p class="step-sub">One tap. Pick the line you want to be true about you. That becomes your target.</p>
+    <div id="targetBlocks"></div>
+    <div class="nav-row">
+      <button class="back-btn" id="tBack">&larr; Back</button>
+      <button class="cta-btn locked" id="tNext">Next</button>
+    </div>
+  </section>
+
+  <!-- OPPORTUNITY -->
+  <section class="screen" id="screen-opp">
+    <h2 class="step-title">Last question.</h2>
+    <p class="step-sub">What do you want to come your way in the next 12 months?</p>
+    <div id="oppOptions"></div>
+    <div class="nav-row">
+      <button class="back-btn" id="oBack">&larr; Back</button>
+      <button class="cta-btn locked" id="oNext">Show my results</button>
+    </div>
+  </section>
+
+  <!-- REVEAL -->
+  <section class="screen" id="screen-reveal">
+    <div class="reveal-wrap">
+      <svg class="magnet-svg reveal-magnet" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 12 v22 a16 16 0 0 0 32 0 V12" stroke="url(#mg2)" stroke-width="9" stroke-linecap="round" fill="none"/>
+        <rect x="15.5" y="10" width="9" height="10" rx="2" fill="#F5F5FF"/>
+        <rect x="47.5" y="10" width="9" height="10" rx="2" fill="#F5F5FF"/>
+        <defs>
+          <linearGradient id="mg2" x1="20" y1="12" x2="52" y2="50">
+            <stop stop-color="#7090FF"/><stop offset="1" stop-color="#2C4DD9"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="reveal-line" id="revealLine">Reading your answers.</div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="screen" id="screen-results">
+    <div class="result-hero">
+      <div class="archetype-label" id="archLabel">You are, right now</div>
+      <div class="archetype-name" id="archName"></div>
+      <p class="archetype-desc" id="archDesc"></p>
+      <div class="score-ring-wrap">
+        <svg width="190" height="190">
+          <circle cx="95" cy="95" r="82" stroke="rgba(245,245,255,0.08)" stroke-width="12" fill="none"/>
+          <circle id="ringFill" cx="95" cy="95" r="82" stroke="url(#ringGrad)" stroke-width="12" fill="none"
+            stroke-linecap="round" stroke-dasharray="515" stroke-dashoffset="515" style="transition:stroke-dashoffset 1.4s cubic-bezier(.2,.7,.3,1);"/>
+          <defs>
+            <linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop stop-color="#2C4DD9"/><stop offset="1" stop-color="#7090FF"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="score-num"><div class="n" id="scoreNum">0</div><div class="lbl">Magnet Score</div></div>
+      </div>
+      <div class="score-verdict" id="scoreVerdict"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">How you're wired</div>
+      <div class="panel-sub">This is how you are built. The magnet gets built on top of it.</div>
+      <div class="style-head">
+        <div class="style-badge" id="styleBadge"></div>
+        <div>
+          <div class="style-kind">Your style</div>
+          <div class="style-name" id="styleName"></div>
+        </div>
+      </div>
+      <div class="style-desc" id="styleDesc"></div>
+      <div class="style-line edge"><b>Your edge</b><span id="styleEdge"></span></div>
+      <div class="style-line watch"><b>Watch out</b><span id="styleWatch"></span></div>
+      <div class="mini-label">Your strengths</div>
+      <div class="tag-row" id="strengthTags"></div>
+      <div class="mini-label">Your home ground</div>
+      <div class="tag-row" id="aptTags"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">Your five forces</div>
+      <div class="panel-sub">The bar is where you are. The white tick is the level you picked.</div>
+      <div id="barsWrap"></div>
+      <div class="bar-legend"><span><span class="dot"></span>You today</span><span><span class="tick"></span>Your 12-month target</span></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">The gap</div>
+      <div class="panel-sub" id="gapIntro"></div>
+      <div id="gapsWrap"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title" id="doTitle">What you can do, starting this week</div>
+      <div class="panel-sub">Built from your aptitudes, your strengths, and where you are. Not generic advice.</div>
+      <div id="doWrap"></div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-title">How you close the gap for good</div>
+      <div class="panel-sub">Become an Opportunity Magnet is a 6-week program. One force per week, one output per week. The highlighted weeks are where your gap lives.</div>
+      <div id="weeksWrap"></div>
+    </div>
+
+    <div class="final-cta">
+      <h3>Nobody is born a magnet.<br>You become one.</h3>
+      <p id="ctaCopy"></p>
+      <div class="cta-row-btns">
+        <a class="cta-btn" id="ctaMail" href="#">I want in. Talk to me.</a>
+        <button class="cta-btn ghost" onclick="window.print()">Save my results</button>
+      </div>
+      <p class="saved-note">Your answers are saved on this device. Come back after the program and check again.</p>
+    </div>
+
+    <div class="footer">
+      <div class="tag">Building humans not college applications.</div>
+      <div>Opportunity Magnet™ is a CareerBubble program by Merushri Baboota.</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// ------------------------------------------------------------------
+// DATA
+// ------------------------------------------------------------------
+const FORCES = ['clarity','conviction','communication','visibility','credibility'];
+
+const FORCE_META = {
+  clarity:       { name:'Clarity',       ask:'Do you know who you are and what you are building?' },
+  conviction:    { name:'Conviction',    ask:'Do you have a point of view, and do you say it?' },
+  communication: { name:'Communication', ask:'Can people understand your value in one sentence?' },
+  visibility:    { name:'Visibility',    ask:'Can the right people see you and find you?' },
+  credibility:   { name:'Credibility',   ask:'Does real work back up what you say?' }
+};
+
+const STAGES = [
+  { key:'student',      name:'Student',                  desc:'School or college. Building from zero.' },
+  { key:'early',        name:'Early career',             desc:'First 3 years of working life.' },
+  { key:'professional', name:'Growing professional',     desc:'Established, aiming higher.' },
+  { key:'founder',      name:'Founder or freelancer',    desc:'You are the product and the brand.' }
+];
+
+// Personality: 3 questions per axis, majority decides. No ties possible.
+const PERS_QUESTIONS = [
+  { axis:'e', q:'A room full of strangers.', a:{ t:'I come alive. People give me energy.', v:'E' }, b:{ t:'I manage. Then I need to recharge alone.', v:'I' } },
+  { axis:'t', q:'A big decision is on the table.', a:{ t:'I go with logic, data, what can be proven.', v:'T' }, b:{ t:'I go with people, gut, what feels right.', v:'F' } },
+  { axis:'e', q:'Your best ideas show up when:', a:{ t:'I am talking them out with someone.', v:'E' }, b:{ t:'I am alone, thinking it through.', v:'I' } },
+  { axis:'t', q:'People come to you for:', a:{ t:'Straight answers and a clear plan.', v:'T' }, b:{ t:'Honest listening and steady support.', v:'F' } },
+  { axis:'e', q:'Friday evening, work done.', a:{ t:'Plans. People. Somewhere to be.', v:'E' }, b:{ t:'Home. Quiet. My own company.', v:'I' } },
+  { axis:'t', q:'A friend brings you a problem.', a:{ t:'I start solving it.', v:'T' }, b:{ t:'I start by asking how they feel.', v:'F' } }
+];
+
+const STYLES = {
+  ET: { name:'The Driver', badge:'D',
+    desc:'Direct. Decisive. You move rooms and make the calls others avoid.',
+    edge:'People remember how sure you are. Use that certainty to open doors.',
+    watch:'Speed can read as steamrolling. Slow down enough to bring people with you.' },
+  EF: { name:'The Spark', badge:'S',
+    desc:'Warm, expressive, quick to connect. Rooms feel different when you are in them.',
+    edge:'You make people feel seen. That is exactly what gets you talked about when you leave.',
+    watch:'Do not let charm do all the work. Back it with proof or it fades by morning.' },
+  IT: { name:'The Architect', badge:'A',
+    desc:'You think in systems. Deep, precise, allergic to fluff.',
+    edge:'When you speak, it lands, because you never waste a word. Scarcity is authority.',
+    watch:'Depth hidden is depth wasted. Let people see the thinking behind the result.' },
+  IF: { name:'The Anchor', badge:'N',
+    desc:'Steady, loyal, the person people trust with the real stuff.',
+    edge:'Trust is your currency. People vouch for you before you ever ask them to.',
+    watch:'Quiet reliability gets taken for granted. Name your wins or others will claim the room.' }
+};
+
+const STRENGTHS = [
+  'Communication','Creativity','Problem-solving','Empathy','Leadership','Discipline',
+  'Fast learning','Organising','Persuasion','Resilience','Attention to detail','Big-picture thinking'
+];
+
+const APTITUDES = [
+  { key:'words', label:'Put your words to work',    name:'Words',    sub:'Writing, speaking, explaining',
+    action:'Write and speak where your people are. One post a week. One room a month. Your words are the asset, so put them in circulation.' },
+  { key:'numbers', label:'Make the numbers speak',  name:'Numbers',  sub:'Analysis, patterns, logic',
+    action:'Turn your analysis into public proof. Break down one problem your field cares about and show your working.' },
+  { key:'people', label:'Work the rooms',   name:'People',   sub:'Reading rooms, building bonds',
+    action:'Work your network on purpose. Two real conversations a week where you show up useful first.' },
+  { key:'ideas', label:'Put your ideas in play',    name:'Ideas',    sub:'Strategy, concepts, connecting dots',
+    action:'Share one sharp take a week. An idea kept private pulls nothing. Put your thinking where it can be quoted.' },
+  { key:'systems', label:'Name your method',  name:'Systems',  sub:'Process, structure, order',
+    action:'Document how you work. A method with your name on it is a magnet. Turn your process into something teachable.' },
+  { key:'visuals', label:'Let your taste show',  name:'Visuals',  sub:'Design, aesthetics, taste',
+    action:'Let your taste show in everything public. Your profile, your slides, your work. Treat every surface as a portfolio.' },
+  { key:'selling', label:'Pitch something',  name:'Selling',  sub:'Persuasion, negotiation',
+    action:'Pitch something every month. A project, an idea, yourself. Your ability to move people is worthless in silence.' },
+  { key:'building', label:'Ship in public', name:'Building', sub:'Shipping, executing, finishing',
+    action:'Ship small things publicly. Finished work is the loudest proof there is. Let the record speak.' }
+];
+
+const STAGE_NOTE = {
+  student:      'At your stage, proof beats polish. One real project outweighs ten certificates. Build something small and show it.',
+  early:        'At your stage, visibility inside the building counts double. Make sure the two people who matter can see your work by name.',
+  professional: 'At your stage, reputation compounds. Pick one flag, plant it, and defend it for a year. Depth beats breadth now.',
+  founder:      'At your stage, you are the brand. Every room you enter is distribution. Never show up without a clear ask or a clear offer.'
+};
+
+// Each question: force, text, options [{t, s}] where s = 1..4. Option order is shuffled by hand.
+const QUESTIONS = [
+  // CLARITY
+  { force:'clarity', q:'You meet someone new at a wedding. They ask, "So, what do you do?"', o:[
+    { t:'I say my job title or my course name, and stop.', s:2 },
+    { t:'I say one clear line: what I do and who I help.', s:4 },
+    { t:'I explain my role and add what I am good at.', s:3 },
+    { t:'I say something different every time.', s:1 }]},
+  { force:'clarity', q:'Quick. Name your top 3 strengths.', o:[
+    { t:'I would need a day to think.', s:1 },
+    { t:'I can name them. I am just not sure others see them in me.', s:3 },
+    { t:'Done. And I can give a real example for each one.', s:4 },
+    { t:'I would say safe words like hardworking and sincere.', s:2 }]},
+  { force:'clarity', q:'Two offers land at the same time. One safe, one exciting. How do you pick?', o:[
+    { t:'I know what I am building, so I decide fast.', s:4 },
+    { t:'I ask family and friends to decide for me.', s:2 },
+    { t:'I get stuck. I do not know what I want.', s:1 },
+    { t:'I go by feel, then keep doubting my choice.', s:3 }]},
+  { force:'clarity', q:'Could your best friend say what matters most to you in your work?', o:[
+    { t:'I know the answer. I have just never said it out loud.', s:3 },
+    { t:'Yes. They would get it right without my help.', s:4 },
+    { t:'No. I have never talked about it.', s:1 },
+    { t:'They would say something vague, like "she works hard".', s:2 }]},
+
+  // CONVICTION
+  { force:'conviction', q:'Everyone in the room agrees on a plan. You think it is wrong.', o:[
+    { t:'I stay quiet. Not worth the fight.', s:1 },
+    { t:'I say what I think, politely, right there.', s:4 },
+    { t:'I agree in the room, then complain about it later.', s:2 },
+    { t:'I speak up only if someone asks me directly.', s:3 }]},
+  { force:'conviction', q:'Your honest opinions about your field:', o:[
+    { t:'I share them openly, even the unpopular ones.', s:4 },
+    { t:'I do not have strong ones.', s:1 },
+    { t:'I share them only with people I trust.', s:3 },
+    { t:'I have them. I keep them to myself.', s:2 }]},
+  { force:'conviction', q:'Everyone around you starts doing something you think is a waste of time.', o:[
+    { t:'I skip it quietly and say nothing.', s:2 },
+    { t:'I do it too. It feels safer.', s:1 },
+    { t:'I say openly why I am not doing it.', s:4 },
+    { t:'I tell my close circle why I am skipping it.', s:3 }]},
+  { force:'conviction', q:'A friend asks, "What is your honest take on this?" about a big topic in your field.', o:[
+    { t:'I have a take, but I soften it so nobody minds.', s:3 },
+    { t:'I say "it depends" and stay in the middle.', s:2 },
+    { t:'I give a clear take, and I can back it up.', s:4 },
+    { t:'I repeat whatever most people are saying.', s:1 }]},
+
+  // COMMUNICATION
+  { force:'communication', q:'You are in a lift with someone who could change your career. You have 30 seconds.', o:[
+    { t:'I panic and talk about the weather.', s:1 },
+    { t:'I get my point across, roughly.', s:3 },
+    { t:'I start telling my whole life story.', s:2 },
+    { t:'I can say who I am, what I do, and why it matters.', s:4 }]},
+  { force:'communication', q:'You explain your work or project to someone. What usually happens next?', o:[
+    { t:'They nod politely and move on.', s:2 },
+    { t:'They remember it and repeat it correctly later.', s:4 },
+    { t:'They ask good follow-up questions.', s:3 },
+    { t:'They look confused or change the topic.', s:1 }]},
+  { force:'communication', q:'You have to write about yourself. A bio, a LinkedIn About, a college form.', o:[
+    { t:'I have sharp lines ready, and I keep them updated.', s:4 },
+    { t:'I keep postponing it until someone forces me.', s:1 },
+    { t:'I copy a format from someone else.', s:2 },
+    { t:'I manage, but it takes me hours.', s:3 }]},
+  { force:'communication', q:'You are explaining something complicated to someone new to it.', o:[
+    { t:'They get it, but I take a long route.', s:3 },
+    { t:'I make it simple. They get it in one go.', s:4 },
+    { t:'They usually look lost.', s:1 },
+    { t:'I use big words. It sounds smarter.', s:2 }]},
+
+  // VISIBILITY
+  { force:'visibility', q:'Someone searches your name on Google or LinkedIn tonight. What do they find?', o:[
+    { t:'Almost nothing.', s:1 },
+    { t:'A decent profile, but a silent feed.', s:3 },
+    { t:'An old profile I have not touched in years.', s:2 },
+    { t:'Exactly what I am about, within one minute.', s:4 }]},
+  { force:'visibility', q:'You finish a project you are proud of. Who gets to know about it?', o:[
+    { t:'Everyone. I share it, with the story behind it.', s:4 },
+    { t:'Only my team, and only if they notice.', s:2 },
+    { t:'A few people. And I downplay it.', s:3 },
+    { t:'Nobody. I just move on to the next thing.', s:1 }]},
+  { force:'visibility', q:'How often do people outside your class or team see your work?', o:[
+    { t:'Rarely. Only when someone else shares it.', s:2 },
+    { t:'Never. I keep my head down.', s:1 },
+    { t:'Often. Sharing my work is a habit now.', s:4 },
+    { t:'Sometimes, on days I feel confident.', s:3 }]},
+  { force:'visibility', q:'You walk into an event where you know nobody.', o:[
+    { t:'I talk to people if there is an easy opening.', s:3 },
+    { t:'I stand near the food and wait for it to end.', s:1 },
+    { t:'I leave with two or three real conversations.', s:4 },
+    { t:'I wait for someone to talk to me first.', s:2 }]},
+
+  // CREDIBILITY
+  { force:'credibility', q:'Someone says, "Prove you are good at this." What can you show them today?', o:[
+    { t:'My degree or my job title.', s:2 },
+    { t:'Nothing. I have nothing ready.', s:1 },
+    { t:'Examples I could dig up, if you give me a few days.', s:3 },
+    { t:'Work, results, or people who will vouch for me.', s:4 }]},
+  { force:'credibility', q:'Look back at your last 12 months. What can you point at?', o:[
+    { t:'Things I am proud of, but nothing is written down.', s:3 },
+    { t:'I was busy all year, but there is nothing to show.', s:2 },
+    { t:'Clear wins I can show and talk about.', s:4 },
+    { t:'Honestly, not much happened.', s:1 }]},
+  { force:'credibility', q:'Your name comes up in a room you are not in. What happens?', o:[
+    { t:'People recommend me for specific things.', s:4 },
+    { t:'A few people would say good things about me.', s:3 },
+    { t:'I doubt my name comes up at all.', s:1 },
+    { t:'People know my name. They cannot say what I am good at.', s:2 }]},
+  { force:'credibility', q:'You promised something by Friday. What usually happens?', o:[
+    { t:'I over-promise, then scramble at the last minute.', s:1 },
+    { t:'I deliver, and I make sure people know it landed.', s:4 },
+    { t:'I promise less than I can do, to stay safe.', s:2 },
+    { t:'I deliver quietly. Nobody even notices.', s:3 }]}
+];
+
+// One tap. The line they pick becomes the target for all five forces.
+const TARGET_LEVELS = [
+  { key:'steady',   num:60, name:'Trusted by my circle',  line:'People who know me trust me and come to me for help.' },
+  { key:'strong',   num:80, name:'Asked for by name',     line:'People I have never met hear about me and ask for me by name.' },
+  { key:'magnetic', num:95, name:'Opportunities find me', line:'Opportunities come to me. I choose which ones to take.' }
+];
+
+const OPPORTUNITIES = [
+  { key:'job',       name:'A better job or internship', desc:'The role you keep watching other people get.' },
+  { key:'promotion', name:'A promotion or a bigger role', desc:'More scope, more trust, more room to lead.' },
+  { key:'clients',   name:'Clients and freelance work', desc:'People who come to you, ready to pay for you.' },
+  { key:'stage',     name:'A stage, an audience, a personal brand', desc:'Your voice, out loud, where it counts.' },
+  { key:'switch',    name:'A career switch', desc:'A new field that takes you seriously from day one.' },
+  { key:'unsure',    name:'Not sure yet. That is why I am here.', desc:'Honest answer. Clarity is where magnets start.' }
+];
+
+const ARCHETYPES = {
+  magnet: {
+    name:'The Magnet',
+    desc:'You are clear, visible, and backed by proof. Opportunities already move toward you. Your next job is range. Bigger rooms, bigger asks, sharper edges.'
+  },
+  clarity: {
+    name:'The Explorer',
+    desc:'You can do many things. That is the problem. Nobody knows which one to pick you for. Until you plant a flag, your talent reads as noise.'
+  },
+  conviction: {
+    name:'The Blender',
+    desc:'You are capable and agreeable. And agreeable is forgettable. You have opinions. You just sand them down before anyone hears them.'
+  },
+  communication: {
+    name:'The Mystery',
+    desc:'Your work is better than your explanation of it. People sense you are good. They could not tell anyone why. That sentence is costing you rooms.'
+  },
+  visibility: {
+    name:'The Best-Kept Secret',
+    desc:'You are strong and nobody can see it. You assumed good work speaks for itself. It stays quiet until you give it a voice.'
+  },
+  credibility: {
+    name:'The Promise',
+    desc:'People like you and believe in your potential. But your words are running ahead of your proof. Receipts turn potential into pull.'
+  }
+};
+
+const GAP_FIX = {
+  clarity:       { week:1, title:'Know Your Pull',            fix:'Week 1 builds your one-line positioning statement.', story:'You cannot be chosen for "everything." This gap keeps you second on every shortlist.' },
+  conviction:    { week:2, title:'Pick a Side',               fix:'Week 2 puts your point of view on record. Three beliefs, written.', story:'No opinion means no edges. No edges means nothing for people to hold on to.' },
+  communication: { week:3, title:'Say It So It Sticks',       fix:'Week 3 gives you a 30-second intro people can repeat.', story:'If people cannot describe you, they cannot recommend you.' },
+  visibility:    { week:4, title:'Get Seen Without Shouting', fix:'Week 4 builds your visibility system. What you share, where, how often.', story:'Right now, luck decides who finds out how good you are.' },
+  credibility:   { week:5, title:'Show, Don’t Say',      fix:'Week 5 turns your last 12 months into a proof kit.', story:'Claims open doors once. Proof keeps them open.' }
+};
+
+const WEEKS = [
+  { n:1, force:'clarity',       title:'Know Your Pull',            out:'Your one-line positioning statement.' },
+  { n:2, force:'conviction',    title:'Pick a Side',               out:'Three written beliefs. Your point of view on record.' },
+  { n:3, force:'communication', title:'Say It So It Sticks',       out:'A 30-second intro and a LinkedIn rewrite.' },
+  { n:4, force:'visibility',    title:'Get Seen Without Shouting', out:'A personal visibility system that runs weekly.' },
+  { n:5, force:'credibility',   title:'Show, Don’t Say',      out:'A proof kit. Work, results, people who vouch.' },
+  { n:6, force:null,            title:'The Pull Plan',             out:'Your recommend-me line and a 90-day plan.' }
+];
+
+const OPP_CTA = {
+  job:       'You want the role people fight to give you. Six weeks, one output a week, and you become the candidate they remember after the interview ends.',
+  promotion: 'Promotions go to the person the room already trusts with more. Six weeks from now, you will be easier to promote than to overlook.',
+  clients:   'Clients pay for certainty. Six weeks, one output a week, and your name starts arriving in rooms before you do.',
+  stage:     'An audience follows a clear voice with proof behind it. We build both, one force at a time.',
+  switch:    'A career switch lives or dies on how you tell your story. Six weeks from now, your past reads as a pitch.',
+  unsure:    'Week 1 exists exactly for this. Clarity first, then everything else has something to stand on.'
+};
+
+// ------------------------------------------------------------------
+// STATE
+// ------------------------------------------------------------------
+const KEY = 'cb_magnet_check_v3';
+let state = {
+  screen:'intro', qIndex:0, answers:{}, target:null,
+  name:'', stage:null, pers:{}, strengths:[], apts:[], opp:null
+};
+
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch(e){} }
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) { const s = JSON.parse(raw); if (s && s.screen) state = Object.assign(state, s); }
+    if (state.screen === 'reveal') state.screen = 'results';
+  } catch(e){}
+}
+
+// ------------------------------------------------------------------
+// SCREENS
+// ------------------------------------------------------------------
+const screens = ['intro','about','wired','material','quiz','targets','opp','reveal','results'];
+let celebrateNext = false;
+function show(name) {
+  state.screen = name; save();
+  screens.forEach(s => document.getElementById('screen-'+s).classList.toggle('active', s === name));
+  document.getElementById('restartBtn').style.display = (name === 'intro' || name === 'reveal') ? 'none' : '';
+  document.getElementById('progressWrap').style.display = (name === 'intro' || name === 'reveal' || name === 'results') ? 'none' : '';
+  updateProgress();
+  window.scrollTo({ top:0 });
+  if (name === 'about') renderAbout();
+  if (name === 'wired') renderWired();
+  if (name === 'material') renderMaterial();
+  if (name === 'quiz') renderQuestion();
+  if (name === 'targets') renderTargets();
+  if (name === 'opp') renderOpp();
+  if (name === 'reveal') runReveal();
+  if (name === 'results') renderResults();
+}
+
+// Short build-up before results, then confetti on arrival.
+function runReveal() {
+  const lines = ['Reading your answers.', 'Finding your style.', 'Measuring your pull.'];
+  const el = document.getElementById('revealLine');
+  let i = 0;
+  el.textContent = lines[0];
+  const iv = setInterval(() => {
+    i++;
+    if (i >= lines.length) {
+      clearInterval(iv);
+      celebrateNext = true;
+      show('results');
+      return;
+    }
+    el.textContent = lines[i];
+  }, 700);
+}
+
+function updateProgress() {
+  const total = 3 + QUESTIONS.length + 2; // about, wired, material + 20 + targets + opp
+  let done = 0, label = '';
+  if (state.screen === 'about')    { done = 0; label = 'About you'; }
+  if (state.screen === 'wired')    { done = 1; label = 'How you are wired'; }
+  if (state.screen === 'material') { done = 2; label = 'Your raw material'; }
+  if (state.screen === 'quiz')     { done = 3 + state.qIndex; label = 'Question ' + (state.qIndex+1) + ' of ' + QUESTIONS.length; }
+  if (state.screen === 'targets')  { done = 3 + QUESTIONS.length; label = 'Your 12-month target'; }
+  if (state.screen === 'opp')      { done = 4 + QUESTIONS.length; label = 'Last question'; }
+  document.getElementById('progressFill').style.width = (done/total*100) + '%';
+  document.getElementById('progressLabel').textContent = label;
+}
+
+function setLocked(btn, locked) {
+  btn.classList.toggle('locked', locked);
+}
+
+// --- About you ---
+function renderAbout() {
+  const input = document.getElementById('nameInput');
+  input.value = state.name || '';
+  const wrap = document.getElementById('stageOpts');
+  wrap.innerHTML = '';
+  STAGES.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'stage-opt' + (state.stage === s.key ? ' selected' : '');
+    el.innerHTML = '<div class="s-name">' + s.name + '</div><div class="s-desc">' + s.desc + '</div>';
+    el.onclick = () => {
+      state.stage = s.key; save();
+      wrap.querySelectorAll('.stage-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      setLocked(document.getElementById('aNext'), false);
+    };
+    wrap.appendChild(el);
+  });
+  setLocked(document.getElementById('aNext'), !state.stage);
+}
+document.getElementById('nameInput').addEventListener('input', function(){
+  state.name = this.value.trim(); save();
+});
+document.getElementById('aNext').onclick = () => show('wired');
+document.getElementById('aBack').onclick = () => show('intro');
+
+// --- Wired ---
+function renderWired() {
+  const wrap = document.getElementById('abBlocks');
+  wrap.innerHTML = '';
+  PERS_QUESTIONS.forEach((pq, i) => {
+    const block = document.createElement('div');
+    block.className = 'ab-block';
+    block.innerHTML = '<div class="ab-q">' + pq.q + '</div>';
+    const opts = document.createElement('div');
+    opts.className = 'ab-opts';
+    [pq.a, pq.b].forEach(o => {
+      const el = document.createElement('div');
+      el.className = 'ab-opt' + (state.pers[i] === o.v ? ' selected' : '');
+      el.textContent = o.t;
+      el.onclick = () => {
+        state.pers[i] = o.v; save();
+        opts.querySelectorAll('.ab-opt').forEach(x => x.classList.remove('selected'));
+        el.classList.add('selected');
+        checkWiredDone();
+      };
+      opts.appendChild(el);
+    });
+    block.appendChild(opts);
+    wrap.appendChild(block);
+  });
+  checkWiredDone();
+}
+function checkWiredDone() {
+  const done = PERS_QUESTIONS.every((_, i) => state.pers[i]);
+  setLocked(document.getElementById('wNext'), !done);
+}
+document.getElementById('wNext').onclick = () => show('material');
+document.getElementById('wBack').onclick = () => show('about');
+
+// --- Material (strengths + aptitudes) ---
+function renderMaterial() {
+  const sWrap = document.getElementById('strengthChips');
+  sWrap.innerHTML = '';
+  STRENGTHS.forEach(s => {
+    const el = document.createElement('div');
+    el.className = 'chip' + (state.strengths.includes(s) ? ' selected' : '');
+    el.textContent = s;
+    el.onclick = () => {
+      const i = state.strengths.indexOf(s);
+      if (i >= 0) state.strengths.splice(i, 1);
+      else if (state.strengths.length < 3) state.strengths.push(s);
+      save(); renderMaterial();
+    };
+    sWrap.appendChild(el);
+  });
+  const aWrap = document.getElementById('aptChips');
+  aWrap.innerHTML = '';
+  APTITUDES.forEach(a => {
+    const el = document.createElement('div');
+    el.className = 'chip wide' + (state.apts.includes(a.key) ? ' selected' : '');
+    el.innerHTML = a.name + '<span class="sub">' + a.sub + '</span>';
+    el.onclick = () => {
+      const i = state.apts.indexOf(a.key);
+      if (i >= 0) state.apts.splice(i, 1);
+      else if (state.apts.length < 2) state.apts.push(a.key);
+      save(); renderMaterial();
+    };
+    aWrap.appendChild(el);
+  });
+  // dim unselected when at cap
+  if (state.strengths.length >= 3) sWrap.querySelectorAll('.chip:not(.selected)').forEach(c => c.classList.add('dim'));
+  if (state.apts.length >= 2) aWrap.querySelectorAll('.chip:not(.selected)').forEach(c => c.classList.add('dim'));
+  document.getElementById('strengthCount').textContent = state.strengths.length + ' of 3 picked';
+  document.getElementById('aptCount').textContent = state.apts.length + ' of 2 picked';
+  setLocked(document.getElementById('mNext'), !(state.strengths.length === 3 && state.apts.length === 2));
+}
+document.getElementById('mNext').onclick = () => show('quiz');
+document.getElementById('mBack').onclick = () => show('wired');
+
+// --- Quiz ---
+let advanceTimer = null;
+function renderQuestion() {
+  const q = QUESTIONS[state.qIndex];
+  document.getElementById('qForce').textContent = FORCE_META[q.force].name + ' · Force ' + (FORCES.indexOf(q.force)+1) + ' of 5';
+  document.getElementById('qText').textContent = q.q;
+  const wrap = document.getElementById('qOptions');
+  wrap.innerHTML = '';
+  const keys = ['A','B','C','D'];
+  q.o.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option' + (state.answers[state.qIndex] === i ? ' selected' : '');
+    btn.innerHTML = '<span class="opt-key">' + keys[i] + '</span><span>' + opt.t + '</span>';
+    btn.onclick = () => {
+      state.answers[state.qIndex] = i; save();
+      btn.parentNode.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      clearTimeout(advanceTimer);
+      advanceTimer = setTimeout(() => {
+        advanceTimer = null;
+        if (state.qIndex < QUESTIONS.length - 1) { state.qIndex++; save(); renderQuestion(); updateProgress(); }
+        else show('targets');
+      }, 260);
+    };
+    wrap.appendChild(btn);
+  });
+  document.getElementById('qBack').disabled = false;
+  updateProgress();
+}
+document.getElementById('qBack').onclick = () => {
+  clearTimeout(advanceTimer); advanceTimer = null;
+  if (state.qIndex > 0) { state.qIndex--; save(); renderQuestion(); }
+  else show('material');
+};
+
+// --- Targets ---
+function renderTargets() {
+  const wrap = document.getElementById('targetBlocks');
+  wrap.innerHTML = '';
+  TARGET_LEVELS.forEach((t, i) => {
+    const el = document.createElement('div');
+    el.className = 'level-opt' + (state.target === t.key ? ' selected' : '');
+    el.innerHTML = '<div class="level-dot">' + (i+1) + '</div>' +
+      '<div><div class="level-name">' + t.name + '</div>' +
+      '<div class="level-line">"' + t.line + '"</div></div>';
+    el.onclick = () => {
+      state.target = t.key; save();
+      wrap.querySelectorAll('.level-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      setLocked(document.getElementById('tNext'), false);
+    };
+    wrap.appendChild(el);
+  });
+  setLocked(document.getElementById('tNext'), !state.target);
+}
+document.getElementById('tNext').onclick = () => show('opp');
+document.getElementById('tBack').onclick = () => { state.qIndex = QUESTIONS.length - 1; show('quiz'); };
+
+// --- Opportunity ---
+function renderOpp() {
+  const wrap = document.getElementById('oppOptions');
+  wrap.innerHTML = '';
+  OPPORTUNITIES.forEach(g => {
+    const el = document.createElement('div');
+    el.className = 'goal-opt' + (state.opp === g.key ? ' selected' : '');
+    el.innerHTML = '<div class="g-name">' + g.name + '</div><div class="g-desc">' + g.desc + '</div>';
+    el.onclick = () => {
+      state.opp = g.key; save();
+      wrap.querySelectorAll('.goal-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      setLocked(document.getElementById('oNext'), false);
+    };
+    wrap.appendChild(el);
+  });
+  setLocked(document.getElementById('oNext'), !state.opp);
+}
+document.getElementById('oNext').onclick = () => show('reveal');
+document.getElementById('oBack').onclick = () => show('targets');
+
+// ------------------------------------------------------------------
+// SCORING + RESULTS
+// ------------------------------------------------------------------
+function computeScores() {
+  const raw = {}; FORCES.forEach(f => raw[f] = 0);
+  QUESTIONS.forEach((q, i) => {
+    const a = state.answers[i];
+    if (a !== undefined) raw[q.force] += q.o[a].s;
+  });
+  const pct = {};
+  FORCES.forEach(f => pct[f] = Math.round(raw[f] / 16 * 100));
+  return pct;
+}
+
+function targetNum() {
+  const t = TARGET_LEVELS.find(t => t.key === state.target);
+  return t ? t.num : 80;
+}
+
+function pickArchetype(pct) {
+  if (FORCES.every(f => pct[f] >= 75)) return ARCHETYPES.magnet;
+  let lowest = FORCES[0];
+  FORCES.forEach(f => { if (pct[f] < pct[lowest]) lowest = f; });
+  return ARCHETYPES[lowest];
+}
+
+function pickStyle() {
+  // Three items per axis, majority decides.
+  let e = 0, i = 0, t = 0, f = 0;
+  PERS_QUESTIONS.forEach((pq, idx) => {
+    const v = state.pers[idx];
+    if (v === 'E') e++; if (v === 'I') i++;
+    if (v === 'T') t++; if (v === 'F') f++;
+  });
+  return STYLES[(e >= i ? 'E' : 'I') + (t >= f ? 'T' : 'F')] || STYLES.EF;
+}
+
+function renderResults() {
+  const pct = computeScores();
+  const score = Math.round(FORCES.reduce((s,f) => s + pct[f], 0) / 5);
+  const arch = pickArchetype(pct);
+  const style = pickStyle();
+  const name = (state.name || '').trim();
+
+  document.getElementById('archLabel').textContent = name ? name + ', right now you are' : 'You are, right now';
+  document.getElementById('archName').textContent = arch.name;
+  document.getElementById('archDesc').textContent = arch.desc;
+
+  // Wired panel
+  document.getElementById('styleBadge').textContent = style.badge;
+  document.getElementById('styleName').textContent = style.name;
+  document.getElementById('styleDesc').textContent = style.desc;
+  document.getElementById('styleEdge').textContent = style.edge;
+  document.getElementById('styleWatch').textContent = style.watch;
+  const sTags = document.getElementById('strengthTags');
+  sTags.innerHTML = '';
+  state.strengths.forEach(s => {
+    const el = document.createElement('span'); el.className = 'tag-pill'; el.textContent = s; sTags.appendChild(el);
+  });
+  const aTags = document.getElementById('aptTags');
+  aTags.innerHTML = '';
+  state.apts.forEach(k => {
+    const a = APTITUDES.find(x => x.key === k);
+    if (!a) return;
+    const el = document.createElement('span'); el.className = 'tag-pill soft'; el.textContent = a.name + ' · ' + a.sub; aTags.appendChild(el);
+  });
+
+  // Score ring + count up
+  const ring = document.getElementById('ringFill');
+  const circumference = 515;
+  setTimeout(() => { ring.style.strokeDashoffset = circumference * (1 - score/100); }, 150);
+  const numEl = document.getElementById('scoreNum');
+  let cur = 0;
+  const step = () => {
+    cur += Math.max(1, Math.round(score/40));
+    if (cur >= score) { numEl.textContent = score; return; }
+    numEl.textContent = cur;
+    requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+  // rAF throttles in background tabs. Guarantee the final number lands.
+  setTimeout(() => { numEl.textContent = score; }, 1600);
+
+  // Verdict under the score
+  let verdict;
+  if (score >= 80)      verdict = 'You have pull. Now aim it at bigger rooms.';
+  else if (score >= 60) verdict = 'There is pull here. Give it a system and it compounds.';
+  else if (score >= 40) verdict = 'The magnet is in you. Time to switch it on.';
+  else                  verdict = 'Everything you need is already in you. Now we build.';
+  document.getElementById('scoreVerdict').textContent = verdict;
+
+  // Panels rise in as they enter the viewport, with a staggered fallback so
+  // nothing stays invisible if the observer is throttled (in-app browsers).
+  const panels = document.querySelectorAll('#screen-results .panel');
+  panels.forEach(p => p.classList.add('hidden-panel'));
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.remove('hidden-panel'); obs.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    panels.forEach(p => obs.observe(p));
+  }
+  panels.forEach((p, i) => setTimeout(() => p.classList.remove('hidden-panel'), 900 + i * 220));
+
+  // Confetti, only when arriving fresh from the reveal
+  if (celebrateNext) { celebrateNext = false; burstConfetti(); }
+
+  // Bars
+  const bars = document.getElementById('barsWrap');
+  bars.innerHTML = '';
+  FORCES.forEach(f => {
+    const t = targetNum(f);
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML =
+      '<div class="bar-head"><span class="bar-name">' + FORCE_META[f].name + '</span>' +
+      '<span class="bar-nums"><b>' + pct[f] + '</b> now &nbsp;·&nbsp; ' + t + ' target</span></div>' +
+      '<div class="bar-shell"><div class="bar-fill" data-w="' + pct[f] + '"></div>' +
+      '<div class="bar-target" style="left:calc(' + t + '% - 1px);"></div></div>';
+    bars.appendChild(row);
+  });
+  setTimeout(() => {
+    bars.querySelectorAll('.bar-fill').forEach(b => b.style.width = b.dataset.w + '%');
+  }, 250);
+
+  // Gaps: top 2 by (target - current)
+  const gaps = FORCES.map(f => ({ f, gap: targetNum(f) - pct[f] }))
+    .sort((a,b) => b.gap - a.gap)
+    .filter(g => g.gap > 0)
+    .slice(0, 2);
+
+  const gapIntro = document.getElementById('gapIntro');
+  const gapsWrap = document.getElementById('gapsWrap');
+  gapsWrap.innerHTML = '';
+  if (gaps.length === 0) {
+    gapIntro.textContent = 'You are already at or past every target you set. Set the bar higher. Magnets do not coast.';
+  } else {
+    gapIntro.textContent = 'Between you today and the person you described, this is what needs to move first.';
+    gaps.forEach((g, i) => {
+      const fx = GAP_FIX[g.f];
+      const el = document.createElement('div');
+      el.className = 'gap-item';
+      el.innerHTML = '<div class="gap-num">' + (i+1) + '</div>' +
+        '<div class="gap-body"><h4>' + FORCE_META[g.f].name + ' · ' + g.gap + ' points behind your target</h4>' +
+        '<p>' + fx.story + '</p>' +
+        '<div class="fix">' + fx.fix + '</div></div>';
+      gapsWrap.appendChild(el);
+    });
+  }
+
+  // What you can do, starting this week
+  document.getElementById('doTitle').textContent = name
+    ? 'What you can do, ' + name + '. Starting this week.'
+    : 'What you can do, starting this week';
+  const doWrap = document.getElementById('doWrap');
+  doWrap.innerHTML = '';
+  const doItems = [];
+  state.apts.forEach(k => {
+    const a = APTITUDES.find(x => x.key === k);
+    if (a) doItems.push({ label:a.label, text:a.action });
+  });
+  if (state.strengths.length === 3) {
+    doItems.push({
+      label:'Turn strengths into proof',
+      text:'You picked ' + state.strengths[0] + ', ' + state.strengths[1] + ' and ' + state.strengths[2] +
+        '. Treat each one as a proof category. Collect one concrete example of each this month and write it down.'
+    });
+  }
+  if (STAGE_NOTE[state.stage]) {
+    doItems.push({ label:'Play your stage', text:STAGE_NOTE[state.stage] });
+  }
+  if (gaps.length > 0) {
+    doItems.push({
+      label:'Attack the gap',
+      text:'Your biggest gap is ' + FORCE_META[gaps[0].f].name + '. ' + GAP_FIX[gaps[0].f].fix + ' Until then, borrow the habit: small, public, weekly.'
+    });
+  }
+  doItems.forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'do-item';
+    el.innerHTML = '<div class="do-check">✓</div><div class="do-body"><h4>' + item.label + '</h4><p>' + item.text + '</p></div>';
+    doWrap.appendChild(el);
+  });
+
+  // Weeks
+  const hotForces = gaps.map(g => g.f);
+  const weeksWrap = document.getElementById('weeksWrap');
+  weeksWrap.innerHTML = '';
+  WEEKS.forEach(w => {
+    const hot = w.force && hotForces.includes(w.force);
+    const el = document.createElement('div');
+    el.className = 'week-row' + (hot ? ' hot' : '');
+    el.innerHTML = '<div class="week-tag">Week ' + w.n + '</div>' +
+      '<div class="week-body"><h4>' + w.title + (hot ? '<span class="hot-flag">Your gap</span>' : '') + '</h4>' +
+      '<p>' + w.out + '</p></div>';
+    weeksWrap.appendChild(el);
+  });
+
+  // CTA
+  document.getElementById('ctaCopy').textContent = OPP_CTA[state.opp] || OPP_CTA.unsure;
+  const subject = encodeURIComponent('Opportunity Magnet. My Magnet Score is ' + score);
+  const body = encodeURIComponent('Hi Meru,\n\n' + (name ? 'I am ' + name + '. ' : '') + 'I took the Magnet Check. I scored ' + score + ' and came out as ' + arch.name + ' with a ' + style.name + ' style. I want to close the gap.\n\n');
+  document.getElementById('ctaMail').href = 'mailto:merushrib@gmail.com?subject=' + subject + '&body=' + body;
+}
+
+// ------------------------------------------------------------------
+// CONFETTI
+// ------------------------------------------------------------------
+function burstConfetti() {
+  const colors = ['#2C4DD9', '#7090FF', '#F5F5FF', '#A8BCFF'];
+  const wrap = document.createElement('div');
+  wrap.id = 'confettiWrap';
+  for (let i = 0; i < 44; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    const size = 5 + Math.random() * 6;
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.width = size + 'px';
+    c.style.height = size * (0.6 + Math.random() * 0.8) + 'px';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (1.4 + Math.random() * 1.4) + 's';
+    c.style.animationDelay = (Math.random() * 0.5) + 's';
+    wrap.appendChild(c);
+  }
+  document.body.appendChild(wrap);
+  setTimeout(() => wrap.remove(), 3400);
+}
+
+// ------------------------------------------------------------------
+// BOOT
+// ------------------------------------------------------------------
+document.getElementById('startBtn').onclick = () => { show('about'); };
+document.getElementById('restartBtn').onclick = () => {
+  if (!confirm('Start over? Your saved answers will be cleared.')) return;
+  state = { screen:'intro', qIndex:0, answers:{}, target:null, name:'', stage:null, pers:{}, strengths:[], apts:[], opp:null };
+  save(); show('intro');
+};
+
+load();
+show(state.screen);
+</script>
+</body>
+</html>
