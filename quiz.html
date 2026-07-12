@@ -624,7 +624,7 @@
 
     <div class="panel">
       <div class="panel-title">How you close the gap for good</div>
-      <div class="panel-sub">Become an Opportunity Magnet is a 6-week program. One force per week, one output per week. The highlighted weeks are where your gap lives.</div>
+      <div class="panel-sub">Become an Opportunity Magnet is a 4-week program. Every week ends with an output in your hands. The highlighted weeks are where your gap lives.</div>
       <div id="weeksWrap"></div>
     </div>
 
@@ -885,19 +885,17 @@ const ARCHETYPES = {
 
 const GAP_FIX = {
   clarity:       { week:1, title:'Know Your Pull',            fix:'Week 1 builds your one-line positioning statement.', story:'You cannot be chosen for "everything." This gap keeps you second on every shortlist.' },
-  conviction:    { week:2, title:'Pick a Side',               fix:'Week 2 puts your point of view on record. Three beliefs, written.', story:'No opinion means no edges. No edges means nothing for people to hold on to.' },
-  communication: { week:3, title:'Say It So It Sticks',       fix:'Week 3 gives you a 30-second intro people can repeat.', story:'If people cannot describe you, they cannot recommend you.' },
-  visibility:    { week:4, title:'Get Seen Without Shouting', fix:'Week 4 builds your visibility system. What you share, where, how often.', story:'Right now, luck decides who finds out how good you are.' },
-  credibility:   { week:5, title:'Show, Don’t Say',      fix:'Week 5 turns your last 12 months into a proof kit.', story:'Claims open doors once. Proof keeps them open.' }
+  conviction:    { week:2, title:'Say It So It Sticks',       fix:'Week 2 puts your point of view on record. Three beliefs, written.', story:'No opinion means no edges. No edges means nothing for people to hold on to.' },
+  communication: { week:2, title:'Say It So It Sticks',       fix:'Week 2 gives you a 30-second intro people can repeat.', story:'If people cannot describe you, they cannot recommend you.' },
+  visibility:    { week:3, title:'Get Seen Without Shouting', fix:'Week 3 builds your visibility system. Your first post goes live in session.', story:'Right now, luck decides who finds out how good you are.' },
+  credibility:   { week:4, title:'Prove It + The Pull Plan',  fix:'Week 4 turns your last 12 months into a proof kit.', story:'Claims open doors once. Proof keeps them open.' }
 };
 
 const WEEKS = [
-  { n:1, force:'clarity',       title:'Know Your Pull',            out:'Your one-line positioning statement.' },
-  { n:2, force:'conviction',    title:'Pick a Side',               out:'Three written beliefs. Your point of view on record.' },
-  { n:3, force:'communication', title:'Say It So It Sticks',       out:'A 30-second intro and a LinkedIn rewrite.' },
-  { n:4, force:'visibility',    title:'Get Seen Without Shouting', out:'A personal visibility system that runs weekly.' },
-  { n:5, force:'credibility',   title:'Show, Don’t Say',      out:'A proof kit. Work, results, people who vouch.' },
-  { n:6, force:null,            title:'The Pull Plan',             out:'Your recommend-me line and a 90-day plan.' }
+  { n:1, force:'clarity',                          title:'Know Your Pull',            out:'Your one-line positioning statement.' },
+  { n:2, force:['conviction','communication'],     title:'Say It So It Sticks',       out:'A 30-second intro, three written beliefs, a LinkedIn rewrite.' },
+  { n:3, force:'visibility',                       title:'Get Seen Without Shouting', out:'A visibility system that runs weekly. First post goes live in session.' },
+  { n:4, force:'credibility',                      title:'Prove It + The Pull Plan',  out:'A proof kit, your 90-day plan, and your new Magnet Score.' }
 ];
 
 const OPP_CTA = {
@@ -1353,7 +1351,7 @@ function renderResults() {
   const weeksWrap = document.getElementById('weeksWrap');
   weeksWrap.innerHTML = '';
   WEEKS.forEach(w => {
-    const hot = w.force && hotForces.includes(w.force);
+    const hot = w.force && [].concat(w.force).some(f => hotForces.includes(f));
     const el = document.createElement('div');
     el.className = 'week-row' + (hot ? ' hot' : '');
     el.innerHTML = '<div class="week-tag">Week ' + w.n + '</div>' +
