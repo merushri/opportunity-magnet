@@ -772,115 +772,56 @@ const STAGE_NOTE = {
 
 // Each question: force, text, options [{t, s}] where s = 1..4. Option order is shuffled by hand.
 const QUESTIONS = [
-  // CLARITY
   { force:'clarity', q:'You meet someone new at a wedding. They ask, "So, what do you do?"', o:[
     { t:'I say my job title or my course name, and stop.', s:2 },
     { t:'I say one clear line: what I do and who I help.', s:4 },
     { t:'I explain my role and add what I am good at.', s:3 },
     { t:'I say something different every time.', s:1 }]},
-  { force:'clarity', q:'Quick. Name your top 3 strengths.', o:[
-    { t:'I would need a day to think.', s:1 },
-    { t:'I can name them. I am just not sure others see them in me.', s:3 },
-    { t:'Done. And I can give a real example for each one.', s:4 },
-    { t:'I would say safe words like hardworking and sincere.', s:2 }]},
-  { force:'clarity', q:'Two offers land at the same time. One safe, one exciting. How do you pick?', o:[
-    { t:'I know what I am building, so I decide fast.', s:4 },
-    { t:'I ask family and friends to decide for me.', s:2 },
-    { t:'I get stuck. I do not know what I want.', s:1 },
-    { t:'I go by feel, then keep doubting my choice.', s:3 }]},
-  { force:'clarity', q:'Could your best friend say what matters most to you in your work?', o:[
-    { t:'I know the answer. I have just never said it out loud.', s:3 },
-    { t:'Yes. They would get it right without my help.', s:4 },
-    { t:'No. I have never talked about it.', s:1 },
-    { t:'They would say something vague, like "she works hard".', s:2 }]},
-
-  // CONVICTION
-  { force:'conviction', q:'Everyone in the room agrees on a plan. You think it is wrong.', o:[
-    { t:'I stay quiet. Not worth the fight.', s:1 },
-    { t:'I say what I think, politely, right there.', s:4 },
-    { t:'I agree in the room, then complain about it later.', s:2 },
-    { t:'I speak up only if someone asks me directly.', s:3 }]},
-  { force:'conviction', q:'Your honest opinions about your field:', o:[
-    { t:'I share them openly, even the unpopular ones.', s:4 },
-    { t:'I do not have strong ones.', s:1 },
-    { t:'I share them only with people I trust.', s:3 },
-    { t:'I have them. I keep them to myself.', s:2 }]},
-  { force:'conviction', q:'Everyone around you starts doing something you think is a waste of time.', o:[
-    { t:'I skip it quietly and say nothing.', s:2 },
-    { t:'I do it too. It feels safer.', s:1 },
-    { t:'I say openly why I am not doing it.', s:4 },
-    { t:'I tell my close circle why I am skipping it.', s:3 }]},
-  { force:'conviction', q:'A friend asks, "What is your honest take on this?" about a big topic in your field.', o:[
-    { t:'I have a take, but I soften it so nobody minds.', s:3 },
-    { t:'I say "it depends" and stay in the middle.', s:2 },
-    { t:'I give a clear take, and I can back it up.', s:4 },
-    { t:'I repeat whatever most people are saying.', s:1 }]},
-
-  // COMMUNICATION
   { force:'communication', q:'You are in a lift with someone who could change your career. You have 30 seconds.', o:[
     { t:'I panic and talk about the weather.', s:1 },
     { t:'I get my point across, roughly.', s:3 },
     { t:'I start telling my whole life story.', s:2 },
     { t:'I can say who I am, what I do, and why it matters.', s:4 }]},
-  { force:'communication', q:'You explain your work or project to someone. What usually happens next?', o:[
-    { t:'They nod politely and move on.', s:2 },
-    { t:'They remember it and repeat it correctly later.', s:4 },
-    { t:'They ask good follow-up questions.', s:3 },
-    { t:'They look confused or change the topic.', s:1 }]},
-  { force:'communication', q:'You have to write about yourself. A bio, a LinkedIn About, a college form.', o:[
-    { t:'I have sharp lines ready, and I keep them updated.', s:4 },
-    { t:'I keep postponing it until someone forces me.', s:1 },
-    { t:'I copy a format from someone else.', s:2 },
-    { t:'I manage, but it takes me hours.', s:3 }]},
-  { force:'communication', q:'You are explaining something complicated to someone new to it.', o:[
-    { t:'They get it, but I take a long route.', s:3 },
-    { t:'I make it simple. They get it in one go.', s:4 },
-    { t:'They usually look lost.', s:1 },
-    { t:'I use big words. It sounds smarter.', s:2 }]},
-
-  // VISIBILITY
   { force:'visibility', q:'Someone searches your name on Google or LinkedIn tonight. What do they find?', o:[
     { t:'Almost nothing.', s:1 },
     { t:'A decent profile, but a silent feed.', s:3 },
     { t:'An old profile I have not touched in years.', s:2 },
     { t:'Exactly what I am about, within one minute.', s:4 }]},
-  { force:'visibility', q:'You finish a project you are proud of. Who gets to know about it?', o:[
-    { t:'Everyone. I share it, with the story behind it.', s:4 },
-    { t:'Only my team, and only if they notice.', s:2 },
-    { t:'A few people. And I downplay it.', s:3 },
-    { t:'Nobody. I just move on to the next thing.', s:1 }]},
-  { force:'visibility', q:'How often do people outside your class or team see your work?', o:[
-    { t:'Rarely. Only when someone else shares it.', s:2 },
-    { t:'Never. I keep my head down.', s:1 },
-    { t:'Often. Sharing my work is a habit now.', s:4 },
-    { t:'Sometimes, on days I feel confident.', s:3 }]},
-  { force:'visibility', q:'You walk into an event where you know nobody.', o:[
-    { t:'I talk to people if there is an easy opening.', s:3 },
-    { t:'I stand near the food and wait for it to end.', s:1 },
-    { t:'I leave with two or three real conversations.', s:4 },
-    { t:'I wait for someone to talk to me first.', s:2 }]},
-
-  // CREDIBILITY
+  { force:'conviction', q:'Everyone in the room agrees on a plan. You think it is wrong.', o:[
+    { t:'I stay quiet. Not worth the fight.', s:1 },
+    { t:'I say what I think, politely, right there.', s:4 },
+    { t:'I agree in the room, then complain about it later.', s:2 },
+    { t:'I speak up only if someone asks me directly.', s:3 }]},
   { force:'credibility', q:'Someone says, "Prove you are good at this." What can you show them today?', o:[
     { t:'My degree or my job title.', s:2 },
     { t:'Nothing. I have nothing ready.', s:1 },
     { t:'Examples I could dig up, if you give me a few days.', s:3 },
     { t:'Work, results, or people who will vouch for me.', s:4 }]},
+  { force:'clarity', q:'Two offers land at the same time. One safe, one exciting. How do you pick?', o:[
+    { t:'I know what I am building, so I decide fast.', s:4 },
+    { t:'I ask family and friends to decide for me.', s:2 },
+    { t:'I get stuck. I do not know what I want.', s:1 },
+    { t:'I go by feel, then keep doubting my choice.', s:3 }]},
+  { force:'communication', q:'You explain your work to someone. What usually happens next?', o:[
+    { t:'They nod politely and move on.', s:2 },
+    { t:'They remember it and repeat it correctly later.', s:4 },
+    { t:'They ask good follow-up questions.', s:3 },
+    { t:'They look confused or change the topic.', s:1 }]},
+  { force:'visibility', q:'You finish something you are proud of. Who gets to know about it?', o:[
+    { t:'Everyone. I share it, with the story behind it.', s:4 },
+    { t:'Only my team, and only if they notice.', s:2 },
+    { t:'A few people. And I downplay it.', s:3 },
+    { t:'Nobody. I just move on to the next thing.', s:1 }]},
+  { force:'conviction', q:'A friend asks for your honest take on a big topic in your field.', o:[
+    { t:'I have a take, but I soften it so nobody minds.', s:3 },
+    { t:'I say "it depends" and stay in the middle.', s:2 },
+    { t:'I give a clear take, and I can back it up.', s:4 },
+    { t:'I repeat whatever most people are saying.', s:1 }]},
   { force:'credibility', q:'Look back at your last 12 months. What can you point at?', o:[
     { t:'Things I am proud of, but nothing is written down.', s:3 },
     { t:'I was busy all year, but there is nothing to show.', s:2 },
     { t:'Clear wins I can show and talk about.', s:4 },
-    { t:'Honestly, not much happened.', s:1 }]},
-  { force:'credibility', q:'Your name comes up in a room you are not in. What happens?', o:[
-    { t:'People recommend me for specific things.', s:4 },
-    { t:'A few people would say good things about me.', s:3 },
-    { t:'I doubt my name comes up at all.', s:1 },
-    { t:'People know my name. They cannot say what I am good at.', s:2 }]},
-  { force:'credibility', q:'You promised something by Friday. What usually happens?', o:[
-    { t:'I over-promise, then scramble at the last minute.', s:1 },
-    { t:'I deliver, and I make sure people know it landed.', s:4 },
-    { t:'I promise less than I can do, to stay safe.', s:2 },
-    { t:'I deliver quietly. Nobody even notices.', s:3 }]}
+    { t:'Honestly, not much happened.', s:1 }]}
 ];
 
 // One tap. The line they pick becomes the target for all five forces.
@@ -1256,13 +1197,15 @@ document.getElementById('cNext').onclick = () => {
 // SCORING + RESULTS
 // ------------------------------------------------------------------
 function computeScores() {
-  const raw = {}; FORCES.forEach(f => raw[f] = 0);
+  const raw = {}, maxByForce = {};
+  FORCES.forEach(f => { raw[f] = 0; maxByForce[f] = 0; });
   QUESTIONS.forEach((q, i) => {
+    maxByForce[q.force] += 4; // each question is worth up to 4 points
     const a = state.answers[i];
     if (a !== undefined) raw[q.force] += q.o[a].s;
   });
   const pct = {};
-  FORCES.forEach(f => pct[f] = Math.round(raw[f] / 16 * 100));
+  FORCES.forEach(f => pct[f] = maxByForce[f] ? Math.round(raw[f] / maxByForce[f] * 100) : 0);
   return pct;
 }
 
