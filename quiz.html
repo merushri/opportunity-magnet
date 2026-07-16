@@ -902,27 +902,27 @@ const OPPORTUNITIES = [
 const ARCHETYPES = {
   magnet: {
     name:'The Magnet',
-    desc:'You are clear, visible, and backed by proof. Opportunities already move toward you. Your next job is range. Bigger rooms, bigger asks, sharper edges.'
+    desc:'You are clear about who you are, people can see you, and your work backs it up. Good things already come your way. The next step is simply bigger rooms.'
   },
   clarity: {
     name:'The Explorer',
-    desc:'You can do many things. That is the problem. Nobody knows which one to pick you for. Until you plant a flag, your talent reads as noise.'
+    desc:'You can do so many things, and that is exactly the trouble. People cannot tell what to come to you for. The day you pick your flag, all of that talent finally points somewhere.'
   },
   conviction: {
     name:'The Blender',
-    desc:'You are capable and agreeable. And agreeable is forgettable. You have opinions. You just sand them down before anyone hears them.'
+    desc:'You are capable and easy to like. The trouble is, easy to like is easy to forget. You have real opinions. You just soften them before anyone gets to hear them.'
   },
   communication: {
     name:'The Mystery',
-    desc:'Your work is better than your explanation of it. People sense you are good. They could not tell anyone why. That sentence is costing you rooms.'
+    desc:'Your work is better than the way you explain it. People can feel that you are good. They just could not tell a friend why, and that quiet gap is costing you rooms.'
   },
   visibility: {
     name:'The Best-Kept Secret',
-    desc:'You are strong and nobody can see it. You assumed good work speaks for itself. It stays quiet until you give it a voice.'
+    desc:'You are genuinely good, and almost nobody knows it. You hoped the work would speak for itself. It has been waiting for you to give it a voice.'
   },
   credibility: {
     name:'The Promise',
-    desc:'People like you and believe in your potential. But your words are running ahead of your proof. Receipts turn potential into pull.'
+    desc:'People like you and believe in what you could become. Right now your words are a little ahead of your proof. A few real receipts change everything.'
   }
 };
 
@@ -1337,10 +1337,10 @@ function renderResults() {
 
   // Verdict under the score
   let verdict;
-  if (score >= 80)      verdict = 'You have pull. Now aim it at bigger rooms.';
-  else if (score >= 60) verdict = 'There is pull here. Give it a system and it compounds.';
-  else if (score >= 40) verdict = 'The magnet is in you. Time to switch it on.';
-  else                  verdict = 'Everything you need is already in you. Now we build.';
+  if (score >= 80)      verdict = 'Good things already come your way. From here, it is about reaching bigger rooms.';
+  else if (score >= 60) verdict = 'There is real pull in you. Give it a little structure and it starts to build on itself.';
+  else if (score >= 40) verdict = 'The pull is there. It is just not switched on yet, and that part can be learned.';
+  else                  verdict = 'You feel invisible right now. Here is the kind part. Invisible is fixable, and you are closer than it feels.';
   document.getElementById('scoreVerdict').textContent = verdict;
 
   // Panels rise in as they enter the viewport, with a staggered fallback so
