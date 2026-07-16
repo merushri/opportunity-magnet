@@ -464,14 +464,14 @@
         </defs>
       </svg>
       <div class="eyebrow">The Magnet Check™</div>
-      <h1>Do good things <em>come to you</em>? Or do you always have to go get them?</h1>
-      <p class="lede">Here is the strange part. The most talented person in the room rarely gets picked. The one people can describe does. Let's see where you stand.</p>
-      <p class="sub">Six minutes. No right answers. You'll walk away knowing your score, what's already working for you, and the one thing quietly getting in your way.</p>
-      <button class="cta-btn" id="startBtn">Let's find out</button>
+      <h1>Why do the right opportunities keep <em>going to someone else</em>?</h1>
+      <p class="lede">You have watched people with half your talent get picked ahead of you. It is not luck, and it is not your skill. It is something quieter, and once you can see it, you can fix it.</p>
+      <p class="sub">This is the most honest read of your career you will get this year. In a few focused minutes it shows you exactly where you stand, the strengths you are sitting on, and the one thing quietly holding your career back.</p>
+      <button class="cta-btn" id="startBtn">Show me where I stand</button>
       <div class="hero-meta">
-        <div><b>6 minutes</b>, that's it</div>
-        <div>Your answers <b>save</b> on their own</div>
-        <div>Free</div>
+        <div>Built from <b>real career science</b></div>
+        <div><b>Personal</b> to you, not generic</div>
+        <div>Answers <b>save</b> as you go</div>
       </div>
       <div class="forces-strip">
         <span class="force-chip">Clarity</span>
@@ -1135,7 +1135,7 @@ document.getElementById('mBack').onclick = () => show('wired');
 let advanceTimer = null;
 function renderQuestion() {
   const q = QUESTIONS[state.qIndex];
-  document.getElementById('qForce').textContent = FORCE_META[q.force].name + ' · Force ' + (FORCES.indexOf(q.force)+1) + ' of 5';
+  document.getElementById('qForce').textContent = 'Question ' + (state.qIndex + 1) + ' of ' + QUESTIONS.length;
   document.getElementById('qText').textContent = q.q;
   const wrap = document.getElementById('qOptions');
   wrap.innerHTML = '';
