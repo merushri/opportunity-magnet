@@ -249,6 +249,10 @@
   .goal-opt .g-desc { font-size:16px; color:var(--text-3); margin-top:3px; }
 
   /* Results */
+  .mirror-block { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--cobalt); border-radius:16px; box-shadow:var(--shadow); padding:24px 26px; margin:8px 0 22px; }
+  .mirror-kicker { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--cobalt); margin-bottom:12px; }
+  .mirror-text { font-size:19px; color:var(--text-2); margin-bottom:16px; }
+  .sentence-text { font-family:'Satoshi',sans-serif; font-size:20px; font-weight:600; color:var(--text); line-height:1.4; }
   .result-hero { text-align:center; padding:34px 0 8px; }
   .archetype-label { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:14px; }
   .archetype-name { font-size:clamp(36px,6.5vw,52px); font-weight:900; font-family:'Satoshi',sans-serif; line-height:1.05; margin-bottom:16px; }
@@ -627,6 +631,12 @@
       <div class="score-verdict" id="scoreVerdict"></div>
     </div>
 
+    <div class="mirror-block" id="mirrorBlock">
+      <div class="mirror-kicker">What your answers show</div>
+      <p class="mirror-text" id="mirrorText"></p>
+      <p class="sentence-text" id="sentenceText"></p>
+    </div>
+
     <div class="panel">
       <div class="panel-title">How you're wired</div>
       <div class="panel-sub">This is how you are built. The magnet gets built on top of it.</div>
@@ -771,57 +781,58 @@ const STAGE_NOTE = {
 };
 
 // Each question: force, text, options [{t, s}] where s = 1..4. Option order is shuffled by hand.
+// Each option: t = choice text, s = score 1..4, tell = short first-person fragment the result quotes back
 const QUESTIONS = [
-  { force:'clarity', q:'You meet someone new at a wedding. They ask, "So, what do you do?"', o:[
-    { t:'I say my job title or my course name, and stop.', s:2 },
-    { t:'I say one clear line: what I do and who I help.', s:4 },
-    { t:'I explain my role and add what I am good at.', s:3 },
-    { t:'I say something different every time.', s:1 }]},
-  { force:'communication', q:'You are in a lift with someone who could change your career. You have 30 seconds.', o:[
-    { t:'I panic and talk about the weather.', s:1 },
-    { t:'I get my point across, roughly.', s:3 },
-    { t:'I start telling my whole life story.', s:2 },
-    { t:'I can say who I am, what I do, and why it matters.', s:4 }]},
-  { force:'visibility', q:'Someone searches your name on Google or LinkedIn tonight. What do they find?', o:[
-    { t:'Almost nothing.', s:1 },
-    { t:'A decent profile, but a silent feed.', s:3 },
-    { t:'An old profile I have not touched in years.', s:2 },
-    { t:'Exactly what I am about, within one minute.', s:4 }]},
-  { force:'conviction', q:'Everyone in the room agrees on a plan. You think it is wrong.', o:[
-    { t:'I stay quiet. Not worth the fight.', s:1 },
-    { t:'I say what I think, politely, right there.', s:4 },
-    { t:'I agree in the room, then complain about it later.', s:2 },
-    { t:'I speak up only if someone asks me directly.', s:3 }]},
-  { force:'credibility', q:'Someone says, "Prove you are good at this." What can you show them today?', o:[
-    { t:'My degree or my job title.', s:2 },
-    { t:'Nothing. I have nothing ready.', s:1 },
-    { t:'Examples I could dig up, if you give me a few days.', s:3 },
-    { t:'Work, results, or people who will vouch for me.', s:4 }]},
-  { force:'clarity', q:'Two offers land at the same time. One safe, one exciting. How do you pick?', o:[
-    { t:'I know what I am building, so I decide fast.', s:4 },
-    { t:'I ask family and friends to decide for me.', s:2 },
-    { t:'I get stuck. I do not know what I want.', s:1 },
-    { t:'I go by feel, then keep doubting my choice.', s:3 }]},
-  { force:'communication', q:'You explain your work to someone. What usually happens next?', o:[
-    { t:'They nod politely and move on.', s:2 },
-    { t:'They remember it and repeat it correctly later.', s:4 },
-    { t:'They ask good follow-up questions.', s:3 },
-    { t:'They look confused or change the topic.', s:1 }]},
-  { force:'visibility', q:'You finish something you are proud of. Who gets to know about it?', o:[
-    { t:'Everyone. I share it, with the story behind it.', s:4 },
-    { t:'Only my team, and only if they notice.', s:2 },
-    { t:'A few people. And I downplay it.', s:3 },
-    { t:'Nobody. I just move on to the next thing.', s:1 }]},
-  { force:'conviction', q:'A friend asks for your honest take on a big topic in your field.', o:[
-    { t:'I have a take, but I soften it so nobody minds.', s:3 },
-    { t:'I say "it depends" and stay in the middle.', s:2 },
-    { t:'I give a clear take, and I can back it up.', s:4 },
-    { t:'I repeat whatever most people are saying.', s:1 }]},
-  { force:'credibility', q:'Look back at your last 12 months. What can you point at?', o:[
-    { t:'Things I am proud of, but nothing is written down.', s:3 },
-    { t:'I was busy all year, but there is nothing to show.', s:2 },
-    { t:'Clear wins I can show and talk about.', s:4 },
-    { t:'Honestly, not much happened.', s:1 }]}
+  { force:'clarity', q:'When someone asks what you do, what actually comes out?', o:[
+    { t:'One clear line about the value I create.', s:4, tell:'you can say what you do in one clean line' },
+    { t:'My role or title, and I leave it there.', s:3, tell:'you lead with your title and stop there' },
+    { t:'It changes depending on who is asking.', s:2, tell:'your answer changes depending on who is asking' },
+    { t:'I fumble it, or say something different every time.', s:1, tell:'you fumble the answer or say something different each time' }]},
+  { force:'communication', q:'You get a short window with someone senior who could open a door. What happens?', o:[
+    { t:'I make my point clearly and leave an impression.', s:4, tell:'you make your point and leave a mark' },
+    { t:'I get the gist across, a little rushed.', s:3, tell:'you get the gist across, a bit rushed' },
+    { t:'I over-explain and lose them.', s:2, tell:'you over-explain and lose them' },
+    { t:'I freeze, or stick to small talk.', s:1, tell:'you freeze and fall back on small talk' }]},
+  { force:'visibility', q:'If someone influential looked you up today, they would find:', o:[
+    { t:'A clear picture of what I do, within a minute.', s:4, tell:'your profile shows what you do inside a minute' },
+    { t:'A decent profile, but a silent, inactive presence.', s:3, tell:'your profile is decent but silent' },
+    { t:'An outdated profile I have not touched in a while.', s:2, tell:'your profile is outdated' },
+    { t:'Very little.', s:1, tell:'there is very little to find on you' }]},
+  { force:'conviction', q:'In a discussion, you hold a view that goes against the room. Usually you:', o:[
+    { t:'State it clearly, in the moment.', s:4, tell:'you say the unpopular view out loud, in the room' },
+    { t:'Share it, but soften it first.', s:3, tell:'you soften your view before you say it' },
+    { t:'Raise it later, privately.', s:2, tell:'you save your real view for private' },
+    { t:'Keep it to myself.', s:1, tell:'you keep your real opinions to yourself' }]},
+  { force:'credibility', q:'Asked to show evidence you are good at your work, right now you could produce:', o:[
+    { t:'Concrete results, samples, or people who would vouch.', s:4, tell:'you have proof and people ready to vouch' },
+    { t:'A few things, given time to pull them together.', s:3, tell:'you would need time to pull your proof together' },
+    { t:'My title or qualifications.', s:2, tell:'you point to your title as proof' },
+    { t:'Nothing ready.', s:1, tell:'you have nothing ready to show' }]},
+  { force:'clarity', q:'Two good directions open up at once. How do you decide?', o:[
+    { t:'I know what I am building, so I decide quickly.', s:4, tell:'you decide fast because you know what you are building' },
+    { t:'I weigh it carefully, but I get there.', s:3, tell:'you get there, slowly' },
+    { t:'I ask other people to help me choose.', s:2, tell:'you hand the decision to other people' },
+    { t:'I stall. I am not sure what I actually want.', s:1, tell:'you stall because you are not sure what you want' }]},
+  { force:'communication', q:'After you explain your work to someone, they usually:', o:[
+    { t:'Remember it and repeat it correctly later.', s:4, tell:'people repeat your work correctly later' },
+    { t:'Ask good follow-up questions.', s:3, tell:'people ask sharp follow-ups' },
+    { t:'Nod politely and move on.', s:2, tell:'people nod politely and move on' },
+    { t:'Look a little lost.', s:1, tell:'people look lost when you explain your work' }]},
+  { force:'visibility', q:'When you do something you are proud of, who finds out?', o:[
+    { t:'I share it, with the story behind it.', s:4, tell:'you share your wins with the story behind them' },
+    { t:'A few people, and I downplay it.', s:3, tell:'you downplay your wins' },
+    { t:'Only my immediate team, if they notice.', s:2, tell:'your wins stay inside your team' },
+    { t:'No one. I move on to the next thing.', s:1, tell:'your wins go unseen and you just move on' }]},
+  { force:'conviction', q:'Asked for your honest take on something in your field, you:', o:[
+    { t:'Give a clear position and can back it.', s:4, tell:'you take a clear position and back it' },
+    { t:'Share it only with people I trust.', s:3, tell:'you share your real take only with people you trust' },
+    { t:'Keep it middle-of-the-road.', s:2, tell:'you keep your take middle-of-the-road' },
+    { t:'Mostly echo the common opinion.', s:1, tell:'you echo whatever opinion is already popular' }]},
+  { force:'credibility', q:'Looking back at your last year, you can point to:', o:[
+    { t:'Clear wins I can show and talk about.', s:4, tell:'you have clear wins you can point to' },
+    { t:'Things I am proud of, but nothing written down.', s:3, tell:'your wins are real but written down nowhere' },
+    { t:'A busy year, but little to show for it.', s:2, tell:'you were busy but have little to show for it' },
+    { t:'Honestly, not much.', s:1, tell:'you cannot point to much from this year' }]}
 ];
 
 // One tap. The line they pick becomes the target for all five forces.
@@ -1232,6 +1243,40 @@ function pickStyle() {
   return STYLES[(e >= i ? 'E' : 'I') + (t >= f ? 'T' : 'F')] || STYLES.EF;
 }
 
+function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+const SENTENCES = {
+  clarity: 'Here is what that adds up to. You are good, and you are hard to describe. If five people who know you had to sum you up in one line, you would get five different answers. You have never picked the one sentence you want people to pass on. That sentence is what sends opportunities your way.',
+  communication: 'Here is what that adds up to. The substance is there. It just does not survive the trip from your head into someone else’s words. People cannot pass on what they cannot repeat, so your best work keeps staying in the room with you.',
+  visibility: 'Here is what that adds up to. You are genuinely good, and almost nobody knows it. The right people cannot recommend a name they have never come across. Your work has been waiting for you to let it be seen.',
+  conviction: 'Here is what that adds up to. You are easy to agree with, and easy to agree with is easy to forget. People pass on names that stand for something. Yours is still kept too safe to travel.',
+  credibility: 'Here is what that adds up to. People like the promise of you, but there is not much yet to point at. A name travels further with proof behind it, and right now your reputation is running slightly ahead of your receipts.'
+};
+function renderMirror(pct, name) {
+  const answered = [];
+  QUESTIONS.forEach((q,i) => {
+    const a = state.answers[i];
+    if (a !== undefined && q.o[a] && q.o[a].tell) answered.push({ tell:q.o[a].tell, s:q.o[a].s });
+  });
+  let lowest = FORCES[0];
+  FORCES.forEach(f => { if (pct[f] < pct[lowest]) lowest = f; });
+  const weak = answered.filter(x => x.s <= 2).sort((a,b)=>a.s-b.s);
+  const pool = weak.length >= 2 ? weak : answered.slice().sort((a,b)=>a.s-b.s);
+  const picks = [];
+  pool.forEach(x => { if (picks.length < 3 && picks.indexOf(x.tell) === -1) picks.push(x.tell); });
+  const allHigh = FORCES.every(f => pct[f] >= 75);
+  let mirror;
+  if (allHigh || weak.length === 0) {
+    mirror = (name ? name + ', your' : 'Your') + ' answers came back strong almost everywhere, which is rarer than you think. The one edge still worth sharpening is right here.';
+  } else {
+    const lead = name ? name + ', a few of your answers line up. ' : 'A few of your answers line up. ';
+    mirror = lead + 'You said ' + (picks[0]||'') + '. ' + (picks[1] ? cap(picks[1]) + '. ' : '') + (picks[2] ? 'And ' + picks[2] + '. ' : '');
+  }
+  document.getElementById('mirrorText').textContent = mirror.trim();
+  document.getElementById('sentenceText').textContent = allHigh
+    ? 'Here is what that adds up to. You already have a sentence people can pass on. The work now is simply putting it in front of bigger rooms.'
+    : SENTENCES[lowest];
+}
+
 function renderResults() {
   const pct = computeScores();
   const score = Math.round(FORCES.reduce((s,f) => s + pct[f], 0) / 5);
@@ -1242,6 +1287,8 @@ function renderResults() {
   document.getElementById('archLabel').textContent = name ? name + ', right now you are' : 'You are, right now';
   document.getElementById('archName').textContent = arch.name;
   document.getElementById('archDesc').textContent = arch.desc;
+
+  renderMirror(pct, name);
 
   // Wired panel
   document.getElementById('styleBadge').textContent = style.badge;
