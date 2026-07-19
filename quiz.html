@@ -1460,6 +1460,13 @@ function renderResults() {
   // Unlock full report
   const unlock = document.getElementById('unlockBtn');
   if (unlock) unlock.href = PAY_LINK || 'index.html';
+  const qp = new URLSearchParams(location.search);
+  if (qp.get('unlocked') === '1' || qp.get('sample') === '1') {
+    const lz = document.getElementById('lockedZone');
+    const pw = document.getElementById('paywall');
+    if (lz) lz.classList.add('unlocked');
+    if (pw) pw.style.display = 'none';
+  }
 
   // CTA
   document.getElementById('ctaCopy').textContent = OPP_CTA[state.opp] || OPP_CTA.unsure;
@@ -1501,8 +1508,22 @@ document.getElementById('restartBtn').onclick = () => {
   save(); show('intro');
 };
 
-load();
-show(state.screen);
+// URL params: ?sample=1 shows a filled sample report (unlocked). ?unlocked=1 unlocks after payment.
+const _params = new URLSearchParams(location.search);
+if (_params.get('sample') === '1') {
+  state = {
+    screen:'results', qIndex:9,
+    answers:{0:3,1:1,2:2,3:1,4:3,5:3,6:2,7:2,8:0,9:3},
+    target:'reach', name:'Priya', stage:'professional',
+    pers:{0:'E',1:'T',2:'E',3:'T',4:'E',5:'T'},
+    strengths:['Communication','Creativity','Leadership'], apts:['People','Ideas'], opp:'promotion',
+    email:'', phone:'', heard:'', feedback:''
+  };
+  show('results');
+} else {
+  load();
+  show(state.screen);
+}
 </script>
 </body>
 </html>
