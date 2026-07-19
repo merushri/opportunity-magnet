@@ -26,7 +26,7 @@
     --shadow: 0 2px 10px rgba(44,77,217,0.06), 0 1px 3px rgba(22,24,58,0.04);
   }
   * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
+  html { scroll-behavior:smooth; overflow-x:hidden; }
   body {
     font-family:'Zain', sans-serif;
     background:linear-gradient(168deg, #FBFCFF 0%, #EEF2FF 52%, #E3EAFF 100%);
@@ -35,7 +35,6 @@
     min-height:100vh;
     font-size:19px;
     line-height:1.55;
-    overflow-x:hidden;
   }
   body::before {
     content:'';
@@ -253,6 +252,17 @@
   .mirror-kicker { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--cobalt); margin-bottom:12px; }
   .mirror-text { font-size:19px; color:var(--text-2); margin-bottom:16px; }
   .sentence-text { font-family:'Satoshi',sans-serif; font-size:20px; font-weight:600; color:var(--text); line-height:1.4; }
+  .paywall { background:linear-gradient(160deg, #fff, #F3F6FF); border:1.5px solid var(--cobalt); border-radius:20px; box-shadow:0 10px 34px rgba(44,77,217,0.12); padding:30px 30px 28px; margin:26px 0 0; text-align:center; position:relative; z-index:3; }
+  .paywall-kicker { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.14em; text-transform:uppercase; color:var(--cobalt); margin-bottom:10px; }
+  .paywall-head { font-family:'Satoshi',sans-serif; font-size:24px; font-weight:900; color:var(--text); line-height:1.2; margin-bottom:12px; }
+  .paywall-sub { font-size:18px; color:var(--text-2); max-width:560px; margin:0 auto 18px; }
+  .paywall-list { list-style:none; text-align:left; max-width:520px; margin:0 auto 22px; }
+  .paywall-list li { font-size:17px; color:var(--text-2); padding:9px 0 9px 30px; position:relative; border-bottom:1px solid var(--border); }
+  .paywall-list li:last-child { border-bottom:none; }
+  .paywall-list li::before { content:'✓'; position:absolute; left:0; top:9px; color:var(--cobalt); font-weight:800; }
+  .paywall-fine { font-size:13.5px; color:var(--text-3); margin-top:14px; }
+  .locked-zone { position:relative; filter:blur(7px); opacity:0.5; pointer-events:none; user-select:none; margin-top:20px; max-height:520px; overflow:hidden; -webkit-mask-image:linear-gradient(#000 40%, transparent 96%); mask-image:linear-gradient(#000 40%, transparent 96%); }
+  .locked-zone.unlocked { filter:none; opacity:1; pointer-events:auto; user-select:auto; max-height:none; -webkit-mask-image:none; mask-image:none; }
   .result-hero { text-align:center; padding:34px 0 8px; }
   .archetype-label { font-family:'Satoshi',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--cobalt-light); margin-bottom:14px; }
   .archetype-name { font-size:clamp(36px,6.5vw,52px); font-weight:900; font-family:'Satoshi',sans-serif; line-height:1.05; margin-bottom:16px; }
@@ -638,47 +648,63 @@
     </div>
 
     <div class="panel">
-      <div class="panel-title">How you're wired</div>
-      <div class="panel-sub">This is how you are built. The magnet gets built on top of it.</div>
-      <div class="style-head">
-        <div class="style-badge" id="styleBadge"></div>
-        <div>
-          <div class="style-kind">Your style</div>
-          <div class="style-name" id="styleName"></div>
-        </div>
-      </div>
-      <div class="style-desc" id="styleDesc"></div>
-      <div class="style-line edge"><b>Your edge</b><span id="styleEdge"></span></div>
-      <div class="style-line watch"><b>Watch out</b><span id="styleWatch"></span></div>
-      <div class="mini-label">Your strengths</div>
-      <div class="tag-row" id="strengthTags"></div>
-      <div class="mini-label">Your home ground</div>
-      <div class="tag-row" id="aptTags"></div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">Your five forces</div>
-      <div class="panel-sub">The bar is where you are. The white tick is the level you picked.</div>
-      <div id="barsWrap"></div>
-      <div class="bar-legend"><span><span class="dot"></span>You today</span><span><span class="tick"></span>Your 12-month target</span></div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title">The gap</div>
-      <div class="panel-sub" id="gapIntro"></div>
-      <div id="gapsWrap"></div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-title" id="doTitle">What you can do, starting this week</div>
-      <div class="panel-sub">Built from your aptitudes, your strengths, and where you are. Not generic advice.</div>
+      <div class="panel-title" id="doTitle">Three things you can do this week</div>
+      <div class="panel-sub">Drawn from your own answers. Start here, whether or not you go any further.</div>
       <div id="doWrap"></div>
     </div>
 
-    <div class="panel">
-      <div class="panel-title">How you close the gap for good</div>
-      <div class="panel-sub">Become an Opportunity Magnet is a 4-week program. Every week ends with an output in your hands. The highlighted weeks are where your gap lives.</div>
-      <div id="weeksWrap"></div>
+    <div class="paywall" id="paywall">
+      <div class="paywall-kicker">Your full report</div>
+      <div class="paywall-head">You have seen the surface. The rest goes underneath.</div>
+      <p class="paywall-sub">The complete Opportunity Magnet Report reads you area by area, shows exactly where each gap sits and why, includes your working style in full, and lays out a thirty-day plan built around your own result. It is written for you, not for everyone.</p>
+      <ul class="paywall-list">
+        <li>Your five areas, scored, with what each one is costing you now</li>
+        <li>Where your single biggest gap sits, and the first move to close it</li>
+        <li>Your working style, your edge, and the thing to watch</li>
+        <li>A thirty-day plan matched to the opportunity you said you want</li>
+      </ul>
+      <a class="cta-btn" id="unlockBtn" href="#">Unlock my full report — ₹1,499</a>
+      <div class="paywall-fine">Delivered the moment you unlock it. Yours to keep and reread.</div>
+    </div>
+
+    <div class="locked-zone" id="lockedZone">
+      <div class="panel">
+        <div class="panel-title">How you're wired</div>
+        <div class="panel-sub">This is how you are built. The magnet gets built on top of it.</div>
+        <div class="style-head">
+          <div class="style-badge" id="styleBadge"></div>
+          <div>
+            <div class="style-kind">Your style</div>
+            <div class="style-name" id="styleName"></div>
+          </div>
+        </div>
+        <div class="style-desc" id="styleDesc"></div>
+        <div class="style-line edge"><b>Your edge</b><span id="styleEdge"></span></div>
+        <div class="style-line watch"><b>Watch out</b><span id="styleWatch"></span></div>
+        <div class="mini-label">Your strengths</div>
+        <div class="tag-row" id="strengthTags"></div>
+        <div class="mini-label">Your home ground</div>
+        <div class="tag-row" id="aptTags"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Your five areas</div>
+        <div class="panel-sub">The bar is where you are. The tick is the level you picked.</div>
+        <div id="barsWrap"></div>
+        <div class="bar-legend"><span><span class="dot"></span>You today</span><span><span class="tick"></span>Your 12-month target</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">The gap</div>
+        <div class="panel-sub" id="gapIntro"></div>
+        <div id="gapsWrap"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">How you close the gap for good</div>
+        <div class="panel-sub">Become an Opportunity Magnet is a 4-week program. Every week ends with an output in your hands. The highlighted weeks are where your gap lives.</div>
+        <div id="weeksWrap"></div>
+      </div>
     </div>
 
     <div class="final-cta">
@@ -1243,6 +1269,15 @@ function pickStyle() {
   return STYLES[(e >= i ? 'E' : 'I') + (t >= f ? 'T' : 'F')] || STYLES.EF;
 }
 
+// Where to send people to pay for the full report. Leave '' and the button opens the sales page.
+const PAY_LINK = '';
+const ACTION_STEPS = {
+  clarity: { label:'Write your one line', text:'Finish this sentence in plain words: I help a certain kind of person do a certain thing. Say your version out loud to three people this week and watch which one makes them lean in. The line they react to is the one worth keeping.' },
+  conviction: { label:'Put one view on record', text:'Choose one thing you believe about your field that not everyone would agree with. Say it once, somewhere people can see it, this week. A point of view is what turns a competent professional into a memorable one.' },
+  communication: { label:'Pass the repeat test', text:'Explain what you do to someone outside your field in two sentences. If they can repeat it back to you correctly, you have found your line. If they cannot, you have found the exact thing worth fixing first.' },
+  visibility: { label:'Let one thing be seen', text:'Share one piece of work you are genuinely proud of this week, with the short story of how it came together. Not a highlight reel. One real thing, put in front of people who could not see it before.' },
+  credibility: { label:'Write down your proof', text:'List three results from the past year that you have never written down anywhere. Put them somewhere you can point to on demand. Proof you cannot show does not count in the moment your name comes up in a room.' }
+};
 function cap(s){ return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
 const SENTENCES = {
   clarity: 'Here is what that adds up to. You are good, and you are hard to describe. If five people who know you had to sum you up in one line, you would get five different answers. You have never picked the one sentence you want people to pass on. That sentence is what sends opportunities your way.',
@@ -1393,37 +1428,18 @@ function renderResults() {
     });
   }
 
-  // What you can do, starting this week
+  // Three things you can do this week (professional, tied to their weakest areas)
   document.getElementById('doTitle').textContent = name
-    ? 'What you can do, ' + name + '. Starting this week.'
-    : 'What you can do, starting this week';
+    ? 'Three things you can do this week, ' + name
+    : 'Three things you can do this week';
   const doWrap = document.getElementById('doWrap');
   doWrap.innerHTML = '';
-  const doItems = [];
-  state.apts.forEach(k => {
-    const a = APTITUDES.find(x => x.key === k);
-    if (a) doItems.push({ label:a.label, text:a.action });
-  });
-  if (state.strengths.length === 3) {
-    doItems.push({
-      label:'Turn strengths into proof',
-      text:'You picked ' + state.strengths[0] + ', ' + state.strengths[1] + ' and ' + state.strengths[2] +
-        '. Treat each one as a proof category. Collect one concrete example of each this month and write it down.'
-    });
-  }
-  if (STAGE_NOTE[state.stage]) {
-    doItems.push({ label:'Play your stage', text:STAGE_NOTE[state.stage] });
-  }
-  if (gaps.length > 0) {
-    doItems.push({
-      label:'Attack the gap',
-      text:'Your biggest gap is ' + FORCE_META[gaps[0].f].name + '. ' + GAP_FIX[gaps[0].f].fix + ' Until then, borrow the habit: small, public, weekly.'
-    });
-  }
-  doItems.forEach(item => {
+  const bottom3 = FORCES.slice().sort((a,b) => pct[a] - pct[b]).slice(0, 3);
+  bottom3.forEach(f => {
+    const step = ACTION_STEPS[f];
     const el = document.createElement('div');
     el.className = 'do-item';
-    el.innerHTML = '<div class="do-check">✓</div><div class="do-body"><h4>' + item.label + '</h4><p>' + item.text + '</p></div>';
+    el.innerHTML = '<div class="do-check">✓</div><div class="do-body"><h4>' + step.label + '</h4><p>' + step.text + '</p></div>';
     doWrap.appendChild(el);
   });
 
@@ -1440,6 +1456,10 @@ function renderResults() {
       '<p>' + w.out + '</p></div>';
     weeksWrap.appendChild(el);
   });
+
+  // Unlock full report
+  const unlock = document.getElementById('unlockBtn');
+  if (unlock) unlock.href = PAY_LINK || 'index.html';
 
   // CTA
   document.getElementById('ctaCopy').textContent = OPP_CTA[state.opp] || OPP_CTA.unsure;
